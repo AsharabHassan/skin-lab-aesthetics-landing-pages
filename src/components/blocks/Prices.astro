@@ -1,0 +1,49 @@
+---
+// Price lists in the home page's dotted-leader style, plus optional pricing notes.
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+interface Props {
+  id?: string; tone: string; eyebrow: string; title: string; lead?: string;
+  tables: { title: string; rows: { name: string; price: string; note?: string }[] }[]; bullets?: string[]; cta?: string;
+}
+const { id, tone, eyebrow, title, lead, tables, bullets, cta } = Astro.props;
+const kv = (b: string) => { const i = b.indexOf(":"); return i > 0 ? [b.slice(0, i), b.slice(i + 1)] : ["", b]; };
+---
+<section id={id} class:list={["scroll-mt-24 py-20 md:py-28", tone === "stone" && "border-t border-line bg-stone"]}>
+  <div class="wrap">
+    <SectionHead title={title} eyebrow={eyebrow} lead={lead} />
+    {tables.length > 0 && (
+      <div class:list={["grid gap-5", tables.length > 1 && "lg:grid-cols-2"]}>
+        {tables.map((t) => (
+          <div class="card reveal p-6 md:p-8">
+            <h3 class="text-2xl">{t.title}</h3>
+            <div class="hairline my-5"></div>
+            <dl class="space-y-3.5">
+              {t.rows.map((r) => (
+                <div class="flex items-baseline gap-3">
+                  <dt class="text-[0.97rem] text-ink-2">
+                    {r.name}
+                    {r.note && <span class="mt-0.5 block text-xs font-semibold uppercase tracking-[0.12em] text-gold-deep">{r.note}</span>}
+                  </dt>
+                  <span aria-hidden="true" class="mb-1 flex-1 border-b border-dotted border-sand"></span>
+                  <dd class="shrink-0 font-serif text-lg text-ink">{r.price}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    )}
+    {bullets && (
+      <ul class="card reveal mx-auto max-w-3xl space-y-4 p-7 md:p-9">
+        {bullets.map((b) => { const [k, v] = kv(b); return (
+          <li class="flex gap-4">
+            <span class="mt-1 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ink text-gold-light"><Icon name="check" size={14} /></span>
+            <p class="text-[1rem] leading-relaxed">{k && <strong class="font-semibold text-ink">{k}:</strong>}{v}</p>
+          </li>
+        ); })}
+      </ul>
+    )}
+    {cta && <div class="mt-12 text-center"><a href="#booking" class="btn btn-gold">{cta} <Icon name="arrow" size={18} /></a></div>}
+  </div>
+</section>

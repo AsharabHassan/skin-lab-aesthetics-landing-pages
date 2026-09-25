@@ -1,0 +1,40 @@
+---
+// Dark promotional band: the hub's Rs3000 offer, or the warts page's guide bonus.
+import Icon from "./Icon.astro";
+interface Props { variant: "consult" | "wartsGuide" }
+const { variant } = Astro.props;
+const c = variant === "consult"
+  ? {
+      badge: "Special In-Person Offer",
+      title: ["Visit Our Experts In-Person For Only", "Rs3000"],
+      lead: "Ready for a comprehensive face-to-face assessment with our Harley Street-trained dermatologists in Lahore? Book your detailed in-clinic consultation.",
+      boxLabel: "What's Included",
+      box: "This fee covers a thorough examination by our specialist dermatologist, diagnosis, and a detailed discussion of your personalized treatment plan options.",
+      cta: "Schedule Your Consultation",
+    }
+  : {
+      badge: "Free Wart Removal Guide",
+      title: ["Experience the joy of", "healthy, radiant skin!"],
+      lead: "Schedule your consultation with our dermatologist and discover the path to a smoother, more confident you.",
+      boxLabel: "Special Bonus",
+      box: "As a special bonus, we'll provide our comprehensive guide to warts, packed with expert advice and tailored tips.",
+      cta: "Book Your Consultation",
+    };
+---
+<section class="on-dark relative overflow-hidden bg-ink py-20 md:py-24">
+  <div aria-hidden="true" class="pointer-events-none absolute -right-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,rgba(184,146,58,.25),transparent_65%)]"></div>
+  <div class="wrap relative grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+    <div class="reveal">
+      <p class="eyebrow">{c.badge}</p>
+      <h2 class="mt-4 text-[2rem] font-medium leading-tight text-ivory sm:text-[2.6rem] md:text-5xl">
+        {c.title[0]} <span class="gold-sheen italic">{c.title[1]}</span>
+      </h2>
+      <p class="mt-5 max-w-xl text-[1.05rem] leading-relaxed text-[#d8d0c4]">{c.lead}</p>
+    </div>
+    <div class="reveal rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-7 md:p-8">
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{c.boxLabel}</p>
+      <p class="mt-3 text-[1rem] leading-relaxed text-[#e6dfd4]">{c.box}</p>
+      <a href="#booking" class="btn btn-gold mt-7 w-full sm:w-auto">{c.cta} <Icon name="arrow" size={18} /></a>
+    </div>
+  </div>
+</section>

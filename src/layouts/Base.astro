@@ -1,0 +1,75 @@
+---
+import "../styles/global.css";
+import { site, type Page } from "../data/site";
+import { schemaFor } from "../lib/schema";
+
+interface Props { page: Page }
+const { page } = Astro.props;
+
+// Landing pages point their canonical at the matching main-site page (as live); the home page is self-canonical.
+const canonical = (page as any).canonical ?? `${site.origin}${page.route}`;
+const ogImage = `${site.lpOrigin}/images/og-default.jpg`;
+const schema = schemaFor(page);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-P6MWZWW9');</script>
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{page.title}</title>
+    <meta name="description" content={page.metaDescription} />
+    <meta name="theme-color" content="#f7f3ec" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:site_name" content={site.brandName} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={page.metaDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_PK" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={page.title} />
+    <meta name="twitter:description" content={page.metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body class="pb-[4.75rem] lg:pb-0">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P6MWZWW9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <slot />
+    <script>
+      // Click tracking for WhatsApp and phone links (dataLayer events, ready for GTM triggers).
+      document.addEventListener("click", (e) => {
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>("a[data-track]");
+        if (!a) return;
+        const w = window as any;
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({ event: a.dataset.track, linkLocation: a.dataset.loc || "", pagePath: location.pathname });
+      });
+
+      // Gentle reveal-on-scroll.
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }),
+        { rootMargin: "0px 0px -8% 0px" },
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

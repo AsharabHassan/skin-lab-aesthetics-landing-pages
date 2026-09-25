@@ -1,0 +1,27 @@
+---
+// "Our Clinic" trio from the source pages, worded for each page's treatment.
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+interface Props { specialty: string }
+const { specialty } = Astro.props;
+const items = [
+  { icon: "shield", title: "Professional Skin Lab Aesthetics Team", text: `Our specialists are certified and experienced in the latest ${specialty} techniques.` },
+  { icon: "spark", title: "State-of-the-Art Technology", text: "We use only the most advanced, FDA-approved laser systems for optimal results and comfort." },
+  { icon: "pin", title: "Premium Location", text: "Skin Lab Aesthetics is conveniently located in DHA Phase 4, Lahore with ample parking and accessibility." },
+];
+---
+<section class="border-t border-line bg-stone py-20 md:py-28">
+  <div class="wrap">
+    <SectionHead title="Our Clinic" eyebrow="Skin Lab Aesthetics" />
+    <ul class="grid gap-px overflow-hidden rounded-[1.25rem] border border-line bg-line md:grid-cols-3">
+      {items.map((it) => (
+        <li class="reveal bg-[#fffdf9] p-7 md:p-9">
+          <Icon name={it.icon} size={26} class="text-gold" />
+          <h3 class="mt-5 text-xl">{it.title}</h3>
+          <p class="mt-3 text-[0.97rem] leading-relaxed">{it.text}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-12 text-center"><a href="#booking" class="btn btn-gold">Claim This Exclusive Offer <Icon name="arrow" size={18} /></a></div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+// Educational "what to look for" section — answers the search intent behind "best aesthetic clinic Lahore".
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+import { bestClinic } from "../../data/home";
+---
+<section id="why" class="py-20 md:py-28">
+  <div class="wrap grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div class="lg:sticky lg:top-28">
+      <SectionHead title={bestClinic.title} eyebrow="Your Checklist" lead={bestClinic.lead} align="left" />
+      <figure class="relative -mt-4 hidden overflow-hidden rounded-[1.25rem] border border-line lg:block">
+        <img src="/images/photos/clinic-storefront.webp" alt="Skin Lab Aesthetics clinic in DHA Phase 4, Lahore" width="631" height="1128" loading="lazy" decoding="async" class="h-80 w-full object-cover" style="object-position:50% 20%" />
+      </figure>
+    </div>
+    <ol class="grid gap-4 sm:grid-cols-2">
+      {bestClinic.points.map((p, i) => (
+        <li class="card reveal flex flex-col p-6 md:p-7">
+          <div class="flex items-center justify-between">
+            <span class="font-serif text-3xl italic leading-none text-gold">{String(i + 1).padStart(2, "0")}</span>
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-ink text-gold-light"><Icon name="check" size={16} /></span>
+          </div>
+          <h3 class="mt-5 text-xl">{p.title}</h3>
+          <p class="mt-2.5 text-[0.97rem] leading-relaxed">{p.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

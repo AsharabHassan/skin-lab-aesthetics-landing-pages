@@ -1,0 +1,19 @@
+---
+// Slim dark band carrying a "starts from" price and a booking button.
+import Icon from "../Icon.astro";
+interface Props { id?: string; title: string; cta: string }
+const { id, title, cta } = Astro.props;
+// "Nail Fungus Removal Starts from Rs1500" → label + price
+const m = title.match(/^(.*?)\s*(Starts? from)\s*(Rs\s?[\d,]+)/i);
+const label = m ? m[1] : title;
+const price = m ? m[3].replace(/^Rs\s?(\d+)(\d{3})$/, "Rs $1,$2") : "";
+---
+<section id={id} class="on-dark relative overflow-hidden bg-ink py-14 md:py-16">
+  <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(184,146,58,.25),transparent_65%)]"></div>
+  <div class="wrap relative flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+    <h2 class="reveal text-[1.9rem] font-medium leading-tight text-ivory sm:text-[2.4rem]">
+      {label}{price && <> <span class="text-[#a89f92]">starts from</span> <span class="gold-sheen italic">{price}</span></>}
+    </h2>
+    <a href="#booking" class="btn btn-gold shrink-0">{cta} <Icon name="arrow" size={18} /></a>
+  </div>
+</section>

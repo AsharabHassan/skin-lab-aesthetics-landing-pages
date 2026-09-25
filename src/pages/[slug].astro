@@ -1,0 +1,91 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Details from "../components/Details.astro";
+import InfoSections from "../components/InfoSections.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import Signature from "../components/Signature.astro";
+import OtherTreatments from "../components/OtherTreatments.astro";
+import Gallery from "../components/Gallery.astro";
+import Offer from "../components/Offer.astro";
+import Reviews from "../components/Reviews.astro";
+import WhyUs from "../components/WhyUs.astro";
+import Team from "../components/Team.astro";
+import Faq from "../components/Faq.astro";
+import FindUs from "../components/FindUs.astro";
+import FinalCta from "../components/FinalCta.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import Blocks from "../components/blocks/Blocks.astro";
+import ClinicInfo from "../components/blocks/ClinicInfo.astro";
+import { pages, pageOrder, reviews, type Page } from "../data/site";
+import { homeResults } from "../data/home";
+import { treatmentPages, treatmentOrder, skinCluster, shortLabels, formOptions, reviewSummary, extraReview, type TreatmentPage } from "../data/treatments";
+
+export function getStaticPaths() {
+  return [
+    ...pageOrder.map((slug) => ({ params: { slug }, props: { page: pages[slug] } })),
+    ...treatmentOrder.map((slug) => ({ params: { slug }, props: { page: treatmentPages[slug] } })),
+  ];
+}
+const { page } = Astro.props as { page: Page };
+const t = treatmentPages[page.slug] as TreatmentPage | undefined;
+const hub = page.slug === "dermatology";
+const related = t && skinCluster.includes(t.slug)
+  ? skinCluster.map((s) => ({ label: shortLabels[s], href: treatmentPages[s].route, current: s === t.slug }))
+  : undefined;
+---
+<Base page={page}>
+  {t ? (
+    <>
+      <Header slug={t.slug} nav={t.nav} />
+      <main>
+        <Hero page={t as unknown as Page} photo={t.heroPhoto} related={related} formOptions={formOptions(t)} formTitle={t.form.title} formIntro={t.form.intro} />
+        <Gallery slug={t.slug} images={t.gallery.images} eyebrow="Real Results" title="See the Skin Lab Aesthetics Difference" lead={t.gallery.lead} />
+        <Blocks blocks={t.blocks} />
+        <Reviews items={[...reviews, extraReview]} summary={reviewSummary} title="Hear From Our Happy Clients" />
+        <HowItWorks
+          title={t.steps?.title}
+          lead={t.steps?.lead}
+          items={t.steps?.items}
+          note={t.slug === "laser-hair-removal" ? undefined : "Each area is treated with specialized settings for optimal results and comfort."}
+          cta={t.steps?.cta}
+        />
+        <Team ids={t.doctors} title={t.teamTitle} lead={t.teamLead} />
+        <Faq title="Frequently Asked Questions" faqs={t.faqs} />
+        <ClinicInfo specialty={t.clinicSpecialty} />
+        <FindUs />
+      </main>
+      <Footer />
+      <MobileBar />
+    </>
+  ) : (
+    <>
+      <Header slug={page.slug} />
+      <main>
+        <Hero page={page} />
+        {hub && <Gallery slug={page.slug} images={homeResults} title="Real Results from Our Clinic" />}
+        <Details page={page} />
+        {page.slug === "mole-removal" && <InfoSections page={page} block="abcde" />}
+        <HowItWorks />
+        {page.signatureTreatments && <Signature data={page.signatureTreatments} />}
+        {page.otherTreatments && <OtherTreatments data={page.otherTreatments} />}
+        {page.benefits && <InfoSections page={page} block="benefits" />}
+        {page.bodyAreas && <InfoSections page={page} block="bodyAreas" />}
+        {page.commonAreas && <InfoSections page={page} block="commonAreas" />}
+        {page.whatToExpect && <InfoSections page={page} block="whatToExpect" />}
+        {hub ? <Offer variant="consult" /> : <Gallery slug={page.slug} />}
+        <Reviews />
+        <WhyUs data={page.whyChooseUs} />
+        {page.slug === "warts-removal" && <Offer variant="wartsGuide" />}
+        <Team ids={page.doctors} />
+        <Faq title={page.faqsSectionTitle} faqs={page.faqs} />
+        <FindUs />
+        <FinalCta slug={page.slug} />
+      </main>
+      <Footer />
+      <MobileBar />
+    </>
+  )}
+</Base>

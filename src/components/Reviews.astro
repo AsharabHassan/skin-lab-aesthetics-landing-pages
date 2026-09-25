@@ -1,0 +1,56 @@
+---
+import Icon from "./Icon.astro";
+import { reviews as defaultReviews } from "../data/site";
+interface Props { items?: typeof defaultReviews; summary?: string; title?: string }
+const { items: reviews = defaultReviews, summary, title = "Patient Experiences" } = Astro.props;
+---
+<section id="reviews" class="overflow-hidden py-20 md:py-28">
+  <div class="wrap">
+    <div class="reveal flex flex-col items-center text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line bg-[#fffdf9] px-4 py-2 text-sm font-semibold text-ink">
+        <span class="font-serif text-lg font-bold text-[#4285f4]">G</span> Google Reviews
+        <span class="flex text-gold">{[0, 1, 2, 3, 4].map(() => <Icon name="star" size={14} />)}</span>
+      </span>
+      <h2 class="mt-5 text-[2rem] font-medium italic sm:text-[2.6rem] md:text-5xl">{title}</h2>
+      <p class="mt-4 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-muted">{summary ?? `5.0 Average Rating • ${reviews.length} Verified Patients`}</p>
+    </div>
+
+    <div class="relative mt-12">
+      <ul id="review-track" class="no-scrollbar -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth px-5 pb-2 md:mx-0 md:px-0">
+        {reviews.map((r) => (
+          <li class="card flex w-[85%] shrink-0 snap-start flex-col p-7 sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]">
+            <span class="flex text-gold">{[0, 1, 2, 3, 4].map(() => <Icon name="star" size={15} />)}</span>
+            <blockquote class="mt-5 flex-1 font-serif text-[1.08rem] italic leading-relaxed text-ink-2">“{r.content}”</blockquote>
+            <div class="mt-6 flex items-center gap-3 border-t border-line pt-5">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-stone text-xs font-bold text-gold-deep">{r.initials}</span>
+              <div class="min-w-0 flex-1">
+                <p class="text-sm font-semibold text-ink">{r.name}</p>
+                <p class="flex items-center gap-1 text-xs text-muted"><Icon name="check" size={12} class="text-[#4285f4]" /> Verified Patient</p>
+              </div>
+              <span class="text-xs text-muted">{r.date}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-8 flex items-center justify-center gap-3">
+        <button type="button" data-dir="-1" aria-label="Previous review" class="review-nav grid h-11 w-11 place-items-center rounded-full border border-line text-ink transition-colors hover:border-gold hover:text-gold-deep"><Icon name="arrowLeft" size={18} /></button>
+        <button type="button" data-dir="1" aria-label="Next review" class="review-nav grid h-11 w-11 place-items-center rounded-full border border-line text-ink transition-colors hover:border-gold hover:text-gold-deep"><Icon name="arrow" size={18} /></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.getElementById("review-track")!;
+  document.querySelectorAll<HTMLButtonElement>(".review-nav").forEach((b) =>
+    b.addEventListener("click", () => {
+      const card = track.querySelector("li")!;
+      const step = card.getBoundingClientRect().width + 16;
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      const dir = Number(b.dataset.dir);
+      if (dir > 0 && atEnd) track.scrollTo({ left: 0 });
+      else if (dir < 0 && track.scrollLeft <= 4) track.scrollTo({ left: track.scrollWidth });
+      else track.scrollBy({ left: dir * step });
+    }),
+  );
+</script>

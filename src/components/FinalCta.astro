@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+import { site, telHref, finalCta } from "../data/site";
+interface Props { slug: string }
+const { slug } = Astro.props;
+const c = finalCta[slug];
+---
+{c && (
+  <section class="on-dark relative overflow-hidden bg-ink py-20 text-center md:py-28">
+    <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-1/2 h-[34rem] w-[54rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(184,146,58,.22),transparent_62%)]"></div>
+    <div class="wrap relative max-w-3xl">
+      <p class="eyebrow justify-center">{slug === "home" ? "Book Your Visit" : "Free Consultation"}</p>
+      <h2 class="mt-4 text-[2.3rem] font-medium text-ivory sm:text-5xl md:text-6xl">Take the First Step <span class="gold-sheen italic">Today</span></h2>
+      <p class="mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-[#d8d0c4] md:text-lg">{c.lead}</p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="#booking" class="btn btn-gold w-full sm:w-auto">Book Consultation <Icon name="arrow" size={18} /></a>
+        <a href={telHref} data-track="phone_click" data-loc="final_cta" class="btn btn-ghost w-full sm:w-auto"><Icon name="phone" size={16} /> Call {site.primaryPhone}</a>
+      </div>
+      <p class="mt-8 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#a89f92]">Includes Free <span class="text-gold-light">{c.bonus}</span></p>
+    </div>
+  </section>
+)}

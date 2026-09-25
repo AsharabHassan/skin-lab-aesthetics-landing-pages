@@ -1,0 +1,123 @@
+---
+// Optional content blocks: ABCDE guide, benefits, body areas, common areas, what to expect.
+import SectionHead from "./SectionHead.astro";
+import Icon from "./Icon.astro";
+import { abcde, type Page } from "../data/site";
+interface Props { page: Page; block: "abcde" | "benefits" | "bodyAreas" | "commonAreas" | "whatToExpect" }
+const { page, block } = Astro.props;
+const d = (page as any)[block];
+const timeline = block === "whatToExpect"
+  ? [
+      { label: "Before", items: d.timeline.before },
+      { label: "During", items: d.timeline.during },
+      { label: "After", items: d.timeline.after },
+    ]
+  : [];
+// Small illustrations of each ABCDE warning sign.
+const moleArt: Record<string, string> = {
+  A: `<path d="M24 40c0-10 7-16 16-16 4 0 7 3 8 7 6 1 10 6 8 12-2 8-12 14-20 12-7-1-12-7-12-15z" fill="#5a3f30"/><path d="M40 20v40" stroke="#b8923a" stroke-dasharray="3 3"/>`,
+  B: `<path d="M26 38l4-8 5 3 3-7 6 5 5-4 2 8 6 1-3 7 4 6-7 2-1 7-7-3-5 5-3-7-7 1 1-7-6-4z" fill="#5a3f30"/>`,
+  C: `<circle cx="40" cy="40" r="16" fill="#6b4c3a"/><circle cx="35" cy="36" r="6" fill="#1c1210"/><circle cx="46" cy="45" r="5" fill="#8a3a2e"/><circle cx="44" cy="33" r="4" fill="#b08a6a"/>`,
+  D: `<circle cx="40" cy="36" r="17" fill="#5a3f30"/><path d="M23 62h34M23 58v8M57 58v8" stroke="#7a5c1e" stroke-width="1.5"/><text x="40" y="74" font-size="8" text-anchor="middle" fill="#7a5c1e" font-family="sans-serif">&gt;6mm</text>`,
+  E: `<circle cx="28" cy="40" r="8" fill="#6b4c3a"/><path d="M40 40h8m-3-3 3 3-3 3" stroke="#7a5c1e" stroke-width="1.5" fill="none"/><path d="M52 32c6-2 12 3 10 9 3 5-2 11-8 9-6 2-9-5-7-9-3-4 0-8 5-9z" fill="#3e2a20"/>`,
+};
+---
+{block === "abcde" && (
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead
+        title="The ABCDE Method"
+        eyebrow="Early Melanoma Detection"
+        lead="Detecting melanoma early saves lives. Use our interactive guide below to understand the 5 warning signs of malignant moles. If you notice ANY of these, book a consultation immediately."
+      />
+      <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {abcde.map((x) => (
+          <li class="card reveal p-6 text-center">
+            <svg viewBox="0 0 80 80" class="mx-auto h-20 w-20" aria-hidden="true" set:html={`<circle cx="40" cy="40" r="38" fill="#f1dfcf"/>${moleArt[x.letter]}`} />
+            <p class="mt-4 font-serif text-3xl leading-none text-gold-deep">{x.letter}</p>
+            <h3 class="mt-2 text-xl">{x.label}</h3>
+            <p class="mt-2 text-[0.95rem] leading-relaxed">{x.desc}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="reveal mx-auto mt-8 flex max-w-3xl items-start gap-4 rounded-2xl border border-red-200 bg-red-50/70 p-5 text-red-900">
+        <Icon name="alert" size={22} class="mt-0.5 shrink-0 text-red-700" />
+        <div>
+          <p class="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-red-800">Health Warning</p>
+          <p class="mt-1 text-sm leading-relaxed">This simulation is for educational purposes only. If you notice ANY change in your moles, book a professional consultation immediately.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{block === "benefits" && (
+  <section class="border-t border-line bg-stone py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={d.sectionTitle} eyebrow="The Benefits" />
+      <ol class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {d.items.map((it: any, i: number) => (
+          <li class="card reveal p-7">
+            <span class="font-serif text-4xl italic text-gold">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="mt-4 text-xl">{it.title}</h3>
+            <p class="mt-3 text-[0.97rem] leading-relaxed">{it.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+
+{block === "bodyAreas" && (
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={d.sectionTitle} eyebrow="Where We Treat" />
+      <div class="grid gap-x-10 gap-y-2 md:grid-cols-2">
+        {d.items.map((it: any) => (
+          <div class="reveal border-t border-line py-6">
+            <h3 class="text-xl">{it.name}</h3>
+            <p class="mt-2 text-[0.97rem] leading-relaxed">{it.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{block === "commonAreas" && (
+  <section class="border-t border-line bg-stone py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={d.sectionTitle} eyebrow="Common Locations" />
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {d.items.map((it: any) => (
+          <div class="card reveal p-6">
+            <Icon name="pin" size={22} class="text-gold" />
+            <h3 class="mt-4 text-lg">{it.title}</h3>
+            <p class="mt-2 text-[0.95rem] leading-relaxed">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{block === "whatToExpect" && (
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={d.sectionTitle} eyebrow="Your Journey" />
+      <div class="grid gap-5 lg:grid-cols-3">
+        {timeline.map((col, i) => (
+          <div class="card reveal p-7 md:p-8">
+            <div class="flex items-center gap-3">
+              <span class="grid h-10 w-10 place-items-center rounded-full bg-ink font-serif text-lg text-gold-light">{i + 1}</span>
+              <h3 class="text-2xl">{col.label}</h3>
+            </div>
+            <ul class="check-list mt-6 space-y-3 text-[0.97rem] leading-relaxed">
+              {col.items.map((t: string) => <li>{t}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

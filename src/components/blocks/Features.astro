@@ -1,0 +1,60 @@
+---
+// Grid of short title/text points, with an optional video, closing note, pull-quote and CTA.
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+interface Props {
+  id?: string; tone: string; eyebrow: string; title: string; lead?: string;
+  items: { title: string; text: string }[]; note?: string; quote?: string; video?: string; cta?: string; numbered?: boolean;
+}
+const { id, tone, eyebrow, title, lead, items, note, quote, video, cta, numbered } = Astro.props;
+const n = items.length;
+const cols = n === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : n === 2 ? "sm:grid-cols-2" : n === 5 ? "sm:grid-cols-2 lg:grid-cols-5" : "sm:grid-cols-2 lg:grid-cols-3";
+---
+<section id={id} class:list={["scroll-mt-24 py-20 md:py-28", tone === "stone" && "border-t border-line bg-stone"]}>
+  <div class="wrap">
+    <SectionHead title={title} eyebrow={eyebrow} lead={lead} />
+    <ol class:list={["grid gap-4 md:gap-5", cols]}>
+      {items.map((it, i) => (
+        <li class="card reveal flex flex-col p-6 md:p-7">
+          {numbered ? (
+            <span class="font-serif text-4xl italic leading-none text-gold">{String(i + 1).padStart(2, "0")}</span>
+          ) : (
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-ink text-gold-light"><Icon name="check" size={18} /></span>
+          )}
+          <h3 class="mt-5 text-xl">{it.title}</h3>
+          <p class="mt-2.5 text-[0.97rem] leading-relaxed">{it.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    {video && (
+      <div class="reveal mx-auto mt-12 max-w-4xl">
+        <button type="button" data-yt={video} aria-label="Play video" class="yt group relative block aspect-video w-full overflow-hidden rounded-[1.5rem] border border-line bg-ink">
+          <img src={`https://i.ytimg.com/vi/${video}/hqdefault.jpg`} alt="" loading="lazy" decoding="async" class="h-full w-full object-cover opacity-85 transition-opacity group-hover:opacity-100" />
+          <span class="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-gold text-ink shadow-[0_16px_40px_-12px_rgba(0,0,0,.6)] transition-transform group-hover:scale-105">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
+          </span>
+        </button>
+      </div>
+    )}
+
+    {note && <p class="reveal mt-10 text-center text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-muted">{note}</p>}
+    {quote && <blockquote class="reveal mx-auto mt-12 max-w-3xl text-center font-serif text-[1.35rem] italic leading-relaxed text-ink-2 md:text-[1.6rem]">“{quote}”</blockquote>}
+    {cta && <div class="mt-12 text-center"><a href="#booking" class="btn btn-gold">{cta} <Icon name="arrow" size={18} /></a></div>}
+  </div>
+</section>
+
+<script>
+  // Load the YouTube player only when the visitor presses play.
+  document.querySelectorAll<HTMLButtonElement>("button.yt").forEach((b) =>
+    b.addEventListener("click", () => {
+      const f = document.createElement("iframe");
+      f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0`;
+      f.title = "Video";
+      f.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+      f.allowFullscreen = true;
+      f.className = "aspect-video w-full rounded-[1.5rem] border border-line";
+      b.replaceWith(f);
+    }),
+  );
+</script>

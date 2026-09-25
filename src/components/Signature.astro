@@ -1,0 +1,41 @@
+---
+import SectionHead from "./SectionHead.astro";
+import Icon from "./Icon.astro";
+interface Props { data: { sectionTitle: string; items: { title: string; description: string; bullets?: string[] }[] } }
+const { data } = Astro.props;
+// "LASER WART REMOVAL: Precision & Speed…" → name + promise
+const split = (t: string) => { const i = t.indexOf(":"); return i > 0 ? [t.slice(0, i), t.slice(i + 1).trim()] : [t, ""]; };
+const bullet = (b: string) => { const i = b.indexOf(":"); return i > 0 ? [b.slice(0, i), b.slice(i + 1)] : ["", b]; };
+---
+<section id="treatments" class="on-dark relative overflow-hidden bg-ink py-20 text-[#d8d0c4] md:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(184,146,58,.18),transparent_65%)]"></div>
+  <div class="wrap relative">
+    <div class="[&_h2]:text-ivory">
+      <SectionHead title={data.sectionTitle} eyebrow="Skin Lab Signature" />
+    </div>
+    <div class:list={["grid gap-5 lg:gap-6", data.items.length > 1 ? "lg:grid-cols-[1.25fr_1fr]" : "mx-auto max-w-3xl"]}>
+      {data.items.map((it, i) => {
+        const [name, promise] = split(it.title);
+        return (
+          <article class:list={[
+            "reveal relative flex flex-col rounded-[1.25rem] p-7 md:p-10",
+            i === 0 ? "border border-gold/50 bg-gradient-to-br from-[#221d17] to-[#16130f]" : "border border-white/10 bg-white/[0.03]",
+          ]}>
+            {i === 0 && <span class="mb-6 inline-flex w-fit items-center gap-2 rounded-full bg-gold px-3.5 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.2em] text-ink"><Icon name="spark" size={14} /> Signature Treatment</span>}
+            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{name}</p>
+            {promise && <h3 class="mt-3 text-[1.7rem] leading-tight text-ivory md:text-[2rem]">{promise}</h3>}
+            <p class="mt-5 text-[1rem] leading-relaxed">{it.description}</p>
+            {it.bullets && it.bullets.length > 0 && (
+              <ul class="check-list mt-7 space-y-3.5 text-[0.97rem] [&_li]:before:border-gold-light">
+                {it.bullets.map((b) => { const [k, v] = bullet(b); return <li>{k && <strong class="font-semibold text-ivory">{k}:</strong>}{v}</li>; })}
+              </ul>
+            )}
+            <a href="#booking" class="group mt-auto inline-flex items-center gap-2 pt-8 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-gold-light hover:text-ivory">
+              Book Consultation <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-1" />
+            </a>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

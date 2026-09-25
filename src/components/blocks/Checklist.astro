@@ -1,0 +1,31 @@
+---
+// Ticked list of reasons/commitments, with optional sub-heading, closing paragraph and pull-quote.
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+interface Props {
+  id?: string; tone: string; eyebrow: string; title: string; lead?: string; subhead?: string;
+  items: { k?: string; v: string }[]; closing?: string; quote?: string; cta?: string;
+}
+const { id, tone, eyebrow, title, lead, subhead, items, closing, quote, cta } = Astro.props;
+const long = items.some((it) => it.v.length > 90);
+---
+<section id={id} class:list={["scroll-mt-24 py-20 md:py-28", tone === "stone" && "border-t border-line bg-stone"]}>
+  <div class="wrap">
+    <SectionHead title={title} eyebrow={eyebrow} lead={lead} />
+    {subhead && <p class="reveal -mt-4 mb-8 text-center text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-ink">{subhead}</p>}
+    <ul class:list={["grid gap-4", long ? "md:grid-cols-2" : "mx-auto max-w-4xl sm:grid-cols-2 lg:grid-cols-3"]}>
+      {items.map((it) => (
+        <li class="card reveal flex gap-4 p-6 md:p-7">
+          <span class="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-ink text-gold-light"><Icon name="check" size={15} /></span>
+          <div>
+            {it.k && <h3 class="text-[1.2rem] leading-snug">{it.k}</h3>}
+            <p class:list={["text-[0.97rem] leading-relaxed", it.k && "mt-2"]}>{it.v}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    {closing && <p class="reveal mx-auto mt-10 max-w-3xl text-center text-[1.05rem] leading-relaxed">{closing}</p>}
+    {quote && <blockquote class="reveal mx-auto mt-12 max-w-3xl text-center font-serif text-[1.35rem] italic leading-relaxed text-ink-2 md:text-[1.6rem]">“{quote}”</blockquote>}
+    {cta && <div class="mt-12 text-center"><a href="#booking" class="btn btn-gold">{cta} <Icon name="arrow" size={18} /></a></div>}
+  </div>
+</section>

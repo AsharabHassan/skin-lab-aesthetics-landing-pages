@@ -1,0 +1,60 @@
+---
+import SectionHead from "./SectionHead.astro";
+import StageVisual from "./StageVisual.astro";
+import MoleCompare from "./MoleCompare.astro";
+import { paras, stageType, hubCardPhotos, conditionImages, type Page } from "../data/site";
+interface Props { page: Page }
+const { page } = Astro.props;
+const w = page.whatIs;
+const hub = page.slug === "dermatology";
+---
+{hub ? (
+  <section id="details" class="border-t border-line bg-stone py-20 md:py-28">
+    <div id="treatments" class="wrap scroll-mt-24">
+      <SectionHead title={w.title} eyebrow="Dermatology Insights" lead={w.description} />
+      <ol class="grid gap-4 md:grid-cols-2 md:gap-5">
+        {w.points.map((pt: any, i: number) => (
+          <li class="card reveal group relative flex flex-col overflow-hidden transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:border-gold/60 hover:shadow-[0_24px_40px_-32px_rgba(20,18,16,.5)] sm:flex-row">
+            {hubCardPhotos[i] && (
+              <div class="relative h-48 shrink-0 overflow-hidden bg-stone sm:h-auto sm:w-[38%]">
+                <img src={hubCardPhotos[i].src} alt="" loading="lazy" decoding="async" width="600" height="1050" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" style={`object-position:${hubCardPhotos[i].pos}`} />
+              </div>
+            )}
+            <div class="p-6 md:p-7">
+              <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-deep"><span class="font-serif text-base italic tracking-normal text-gold">{String(i + 1).padStart(2, "0")}</span> · Treatment</p>
+              <h3 class="mt-2 text-xl md:text-[1.35rem]">{pt.label}</h3>
+              <p class="mt-3 text-[0.95rem] leading-relaxed">{pt.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+) : (
+  <section id="details" class="border-t border-line bg-stone py-20 md:py-28">
+    <div class="wrap grid items-start gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+      <div>
+        <SectionHead title={w.title} eyebrow="Dermatology Insights" align="left" />
+        <div class="-mt-6 space-y-4 text-[1.05rem] leading-relaxed">
+          {paras(w.description).map((p) => <p>{p}</p>)}
+        </div>
+        {w.points.length > 0 && (
+          <dl class="mt-8 divide-y divide-line border-y border-line">
+            {w.points.map((pt: any) => (
+              <div class="reveal grid gap-1 py-5 sm:grid-cols-[9rem_1fr] sm:gap-6">
+                <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gold-deep sm:pt-1">{pt.label}</dt>
+                <dd class="text-[0.98rem] leading-relaxed">{pt.text}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </div>
+      <div class="reveal lg:sticky lg:top-28">
+        {conditionImages[page.slug] && (
+          <img src={conditionImages[page.slug]} alt="" loading="lazy" decoding="async" width="720" height="800" class="relative z-10 mx-auto -mb-2 w-[74%] max-w-[22rem] drop-shadow-[0_24px_30px_rgba(20,18,16,.18)]" />
+        )}
+        {page.slug === "mole-removal" ? <MoleCompare /> : <StageVisual type={stageType(page.slug)} />}
+      </div>
+    </div>
+  </section>
+)}

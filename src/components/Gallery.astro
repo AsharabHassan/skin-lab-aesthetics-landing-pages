@@ -1,0 +1,21 @@
+---
+import SectionHead from "./SectionHead.astro";
+import { gallery } from "../data/site";
+interface Props { slug: string; images?: string[]; title?: string; eyebrow?: string; lead?: string }
+const { slug, images: override, title = "Real Clinical Results", eyebrow = "Skin Lab Aesthetics", lead } = Astro.props;
+const images = override ?? gallery[slug] ?? [];
+---
+{images.length > 0 && (
+  <section id="gallery" class="border-t border-line bg-stone py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={title} eyebrow={eyebrow} lead={lead} />
+      <div class:list={["grid gap-4 sm:gap-5", images.length === 1 ? "mx-auto max-w-md" : images.length === 2 ? "mx-auto max-w-4xl sm:grid-cols-2" : images.length % 4 === 0 ? "grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-2 lg:grid-cols-3"]}>
+        {images.map((src, i) => (
+          <figure class="reveal overflow-hidden rounded-[1.25rem] border border-line bg-[#fffdf9] p-2">
+            <img src={src} alt="" aria-hidden="true" width="945" height="945" loading={i === 0 ? "eager" : "lazy"} decoding="async" class="block aspect-square w-full rounded-[0.9rem] object-cover" />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

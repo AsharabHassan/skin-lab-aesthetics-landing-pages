@@ -1,0 +1,35 @@
+---
+// Renders a treatment page's content blocks in order, alternating light and stone backgrounds.
+import Intro from "./Intro.astro";
+import Features from "./Features.astro";
+import Protocol from "./Protocol.astro";
+import TreatmentList from "./TreatmentList.astro";
+import Comparison from "./Comparison.astro";
+import Prices from "./Prices.astro";
+import PriceBand from "./PriceBand.astro";
+import Checklist from "./Checklist.astro";
+import type { Block } from "../../data/treatments";
+interface Props { blocks: Block[] }
+const { blocks } = Astro.props;
+// Dark bands reset the rhythm so two stone sections never touch.
+let light = true;
+const tones = blocks.map((b) => {
+  if (b.type === "protocol" || b.type === "priceBand") { light = true; return "dark"; }
+  const t = light ? "light" : "stone";
+  light = !light;
+  return t;
+});
+---
+{blocks.map((b, i) => {
+  const tone = tones[i];
+  switch (b.type) {
+    case "intro": return <Intro {...b} tone={tone} />;
+    case "features": return <Features {...b} tone={tone} />;
+    case "protocol": return <Protocol {...b} />;
+    case "treatments": return <TreatmentList {...b} tone={tone} />;
+    case "comparison": return <Comparison {...b} tone={tone} />;
+    case "prices": return <Prices {...b} tone={tone} />;
+    case "priceBand": return <PriceBand {...b} />;
+    case "checklist": return <Checklist {...b} tone={tone} />;
+  }
+})}

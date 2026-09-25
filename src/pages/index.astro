@@ -1,0 +1,46 @@
+---
+// Home page: "Best Aesthetic Clinic in Lahore".
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import UspStrip from "../components/home/UspStrip.astro";
+import BestClinic from "../components/home/BestClinic.astro";
+import FeaturedTreatments from "../components/home/FeaturedTreatments.astro";
+import TreatmentMenu from "../components/home/TreatmentMenu.astro";
+import Technology from "../components/home/Technology.astro";
+import PriceList from "../components/home/PriceList.astro";
+import Gallery from "../components/Gallery.astro";
+import Reviews from "../components/Reviews.astro";
+import Team from "../components/Team.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import Faq from "../components/Faq.astro";
+import FindUs from "../components/FindUs.astro";
+import FinalCta from "../components/FinalCta.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { home, homeNav, homeTreatmentOptions, homeResults } from "../data/home";
+import type { Page } from "../data/site";
+
+const page = home as unknown as Page;
+---
+<Base page={page}>
+  <Header slug="home" nav={homeNav} />
+  <main>
+    <Hero page={page} formOptions={homeTreatmentOptions} />
+    <UspStrip />
+    <FeaturedTreatments />
+    <BestClinic />
+    <TreatmentMenu />
+    <Technology />
+    <PriceList />
+    <Gallery slug="home" images={homeResults} title="Real Results from Our Clinic" />
+    <Reviews />
+    <Team ids={home.doctors} />
+    <HowItWorks />
+    <Faq title={home.faqsSectionTitle} faqs={home.faqs} />
+    <FindUs />
+    <FinalCta slug="home" />
+  </main>
+  <Footer />
+  <MobileBar />
+</Base>

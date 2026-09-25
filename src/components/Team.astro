@@ -1,0 +1,33 @@
+---
+import SectionHead from "./SectionHead.astro";
+import { doctors } from "../data/site";
+interface Props { ids: string[]; title?: string; lead?: string }
+const { ids, title = "Our Specialist Team", lead } = Astro.props;
+const team = ids.map((id) => doctors[id as keyof typeof doctors]).filter(Boolean);
+---
+{team.length > 0 && (
+  <section id="team" class="py-20 md:py-28">
+    <div class="wrap">
+      <SectionHead title={title} eyebrow="Elite Medical Professionals" lead={lead} />
+      <div class:list={["grid gap-6 md:gap-8", team.length === 2 ? "mx-auto max-w-4xl md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"]}>
+        {team.map((d) => (
+          <article class="card reveal flex flex-col overflow-hidden">
+            <div class="bg-[#faf8f2]">
+              <img src={d.image} alt={d.name} width="1080" height="1080" loading="lazy" decoding="async" class="block aspect-square w-full object-cover" />
+            </div>
+            <div class="flex flex-1 flex-col p-7">
+              <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">{d.title}</p>
+              <h3 class="mt-2 text-[1.6rem]">{d.name}</h3>
+              <details class="group mt-3">
+                <summary class="text-[0.97rem] leading-relaxed">
+                  <span class="line-clamp-4 group-open:line-clamp-none">{d.description}</span>
+                  <span class="mt-2 inline-block text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-gold-deep group-open:hidden">Read more</span>
+                </summary>
+              </details>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

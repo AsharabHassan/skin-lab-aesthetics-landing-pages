@@ -1,0 +1,119 @@
+---
+import Icon from "./Icon.astro";
+import BookingForm from "./BookingForm.astro";
+import { doctors, paras, clusters, clusterLabels, pages, heroPhotos, type Page } from "../data/site";
+interface Props {
+  page: Page;
+  formOptions?: string[];
+  formTitle?: string;
+  formIntro?: string;
+  photo?: { src: string; alt: string; pos: string; w: number; h: number };
+  related?: { label: string; href: string; current: boolean }[];
+}
+const { page, formOptions, formTitle, formIntro, photo: photoOverride, related } = Astro.props;
+const cluster = related ?? clusters.find((c) => c.includes(page.slug))?.map((s) => ({ label: clusterLabels[s], href: pages[s].route, current: s === page.slug }));
+const photo = photoOverride ?? heroPhotos[page.slug] ?? heroPhotos.dermatology;
+const team = (page.doctors as string[]).map((id) => doctors[id as keyof typeof doctors]);
+---
+<section class="relative overflow-hidden">
+  <!-- soft brand glow + oversized monogram -->
+  <div aria-hidden="true" class="pointer-events-none absolute -right-40 -top-40 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(217,189,124,.35),transparent_65%)]"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute -left-24 top-1/3 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(228,217,198,.9),transparent_70%)]"></div>
+
+  <div class="wrap relative">
+    {cluster && (
+      <nav aria-label="Related treatments" class="no-scrollbar -mx-5 mt-5 flex gap-2 overflow-x-auto px-5 md:mx-0 md:mt-8 md:px-0">
+        {cluster.map((s) =>
+          s.current ? (
+            <span aria-current="page" class="shrink-0 rounded-full bg-ink px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ivory">{s.label}</span>
+          ) : (
+            <a href={s.href} class="shrink-0 rounded-full border border-line bg-[#fffdf9]/70 px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ink-2 transition-colors hover:border-gold hover:text-gold-deep">{s.label}</a>
+          ),
+        )}
+      </nav>
+    )}
+
+    <div class="grid items-start gap-10 pb-16 pt-8 md:pt-12 lg:grid-cols-[1fr_1fr] lg:gap-14 lg:pb-24 lg:pt-16">
+      <div>
+        {page.hero.offer && (
+          <p class="mb-6 inline-flex items-center gap-2 rounded-full border border-gold/50 bg-[#fffdf9] px-4 py-2 text-[0.72rem] font-semibold uppercase leading-snug tracking-[0.12em] text-gold-deep">
+            <Icon name="spark" size={14} class="shrink-0 text-gold" /> {page.hero.offer}
+          </p>
+        )}
+        <p class="eyebrow">{page.hero.label}</p>
+
+        <div class="mt-5 flex items-center gap-2">
+          <span class="flex text-gold">{[0, 1, 2, 3, 4].map(() => <Icon name="star" size={16} />)}</span>
+          <span class="text-sm font-semibold text-ink">4.9/5 Google Reviews</span>
+        </div>
+
+        <h1 class="mt-5 text-[2.35rem] font-medium leading-[1.08] sm:text-5xl lg:text-[3.1rem] xl:text-[3.35rem]">{page.hero.h1}</h1>
+
+        <div class="mt-6 max-w-xl space-y-4 text-[1.05rem] leading-relaxed text-body md:text-lg">
+          {paras(page.hero.subtitle).map((p) => <p>{p}</p>)}
+        </div>
+
+        {page.hero.badges?.length > 0 && (
+          <ul class:list={["mt-6 grid gap-2.5", page.hero.badges.some((b: string) => b.length > 30) ? "max-w-xl" : "sm:flex sm:flex-wrap sm:gap-x-6"]}>
+            {page.hero.badges.map((b: string) => {
+              const i = b.indexOf(":");
+              return (
+                <li class="flex items-start gap-2.5 text-[0.95rem] text-ink-2">
+                  <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-ink text-gold-light"><Icon name="check" size={12} /></span>
+                  <span>{i > 0 ? <><strong class="font-semibold text-ink">{b.slice(0, i)}:</strong>{b.slice(i + 1)}</> : <strong class="font-semibold text-ink">{b}</strong>}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+
+        <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
+          <a href="#booking" class="btn btn-gold hidden lg:inline-flex">{page.hero.cta ?? "Book Your Consultation"} <Icon name="arrow" size={18} /></a>
+          <div class="sm:border-l sm:border-line sm:pl-5 lg:border-line">
+            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted">In-Clinic Consultation</p>
+            <p class="font-serif text-2xl text-ink">Starts at Rs 3,000</p>
+          </div>
+        </div>
+
+        {page.stats?.length > 0 && (
+          <dl class="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-8 sm:grid-cols-4">
+            {page.stats.map((s: any) => (
+              <div>
+                <dt class="sr-only">{s.label}</dt>
+                <dd class="font-serif text-[1.65rem] leading-none text-gold-deep">{s.value}</dd>
+                <dd class="mt-2 text-[0.72rem] font-medium uppercase leading-snug tracking-[0.12em] text-muted">{s.label}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+
+        {team.length > 0 && <a href="#team" class="group mt-10 flex items-center gap-4">
+          <span class="flex shrink-0 -space-x-3">
+            {team.map((d) => (
+              <img src={d.image.replace("dr-", "avatar-")} alt="" width="200" height="200" class="h-12 w-12 rounded-full border-2 border-ivory object-cover" />
+            ))}
+          </span>
+          <span class="text-sm leading-snug">
+            <span class="block font-semibold text-ink">Our Specialist Team</span>
+            <span class="text-muted group-hover:text-gold-deep">Meet {team.map((d) => d.name).join(", ").replace(/, ([^,]*)$/, " & $1")}</span>
+          </span>
+        </a>}
+      </div>
+
+      <div class="relative">
+        <figure class="relative h-72 overflow-hidden rounded-[1.5rem] border border-line bg-stone sm:h-96 lg:absolute lg:right-0 lg:top-0 lg:h-[40rem] lg:w-[56%]">
+          <img src={photo.src} alt={photo.alt} width={photo.w} height={photo.h} fetchpriority="high" decoding="async" class="h-full w-full object-cover" style={`object-position:${photo.pos}`} />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent"></div>
+          {photo.src.includes("clinic-storefront") && (
+            <figcaption class="absolute right-4 top-4 flex items-center gap-1.5 rounded-full bg-ivory/90 px-3 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-ink backdrop-blur">
+              <Icon name="pin" size={14} class="text-gold-deep" /> Our Clinic
+            </figcaption>
+          )}
+        </figure>
+        <div class="relative -mt-24 px-3 sm:-mt-28 sm:px-10 lg:mt-0 lg:px-0 lg:pr-[30%] lg:pt-16 xl:pr-[34%]">
+          <BookingForm slug={page.slug} options={formOptions} title={formTitle} intro={formIntro} />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

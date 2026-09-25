@@ -1,0 +1,28 @@
+---
+import SectionHead from "../SectionHead.astro";
+import Icon from "../Icon.astro";
+import { technology } from "../../data/home";
+---
+<section class="on-dark relative overflow-hidden bg-ink py-20 text-[#d8d0c4] md:py-28">
+  <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-0 h-[30rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse,rgba(184,146,58,.18),transparent_65%)]"></div>
+  <div class="wrap relative">
+    <div class="[&_h2]:text-ivory">
+      <SectionHead title="Medical-Grade Technology" eyebrow="Skin Lab Signature" lead="The systems behind our results." />
+    </div>
+    <div class="-mt-2 grid gap-5 lg:grid-cols-2">
+      {technology.map((t, i) => (
+        <article class:list={["reveal flex flex-col rounded-[1.25rem] p-7 md:p-10", i === 0 ? "border border-gold/50 bg-gradient-to-br from-[#221d17] to-[#16130f]" : "border border-white/10 bg-white/[0.03]"]}>
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-gold-light">{t.name}</p>
+          <h3 class="mt-3 text-[1.7rem] leading-tight text-ivory md:text-[2rem]">{t.title}</h3>
+          <p class="mt-4 leading-relaxed">{t.text}</p>
+          <ul class="check-list mt-6 space-y-3 [&_li]:before:border-gold-light">
+            {t.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+          <a href="#booking" class="group mt-auto inline-flex items-center gap-2 pt-8 text-[0.75rem] font-semibold uppercase tracking-[0.2em] text-gold-light hover:text-ivory">
+            Book Consultation <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-1" />
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

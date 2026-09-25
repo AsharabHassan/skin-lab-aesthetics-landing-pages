@@ -1,0 +1,64 @@
+---
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+---
+<section class="py-20 md:py-28">
+  <div class="wrap grid items-stretch gap-8 lg:grid-cols-2 lg:gap-14">
+    <div class="flex flex-col justify-center">
+      <p class="eyebrow">Find Us</p>
+      <h2 class="mt-4 text-[2.2rem] font-medium leading-tight sm:text-5xl">{site.brandShort} <span class="italic text-gold-deep">Aesthetics</span></h2>
+      <p class="mt-4 max-w-md text-[1.05rem] leading-relaxed">{site.tagline} — private, professional dermatology care in {site.address.city}.</p>
+
+      <div class="mt-8 space-y-3">
+        <a href={site.mapLink} target="_blank" rel="noopener noreferrer" class="card group flex items-center gap-4 p-5 transition-colors hover:border-gold/60">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-stone text-gold-deep"><Icon name="pin" /></span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">{site.address.city} Clinic Location</span>
+            <span class="block text-[0.97rem] font-medium text-ink">{site.address.full}</span>
+          </span>
+          <Icon name="arrow" size={18} class="text-gold-deep transition-transform group-hover:translate-x-1" />
+        </a>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="card flex items-start gap-4 p-5">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-stone text-gold-deep"><Icon name="phone" size={18} /></span>
+            <span>
+              <span class="block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">Reception</span>
+              {site.phones.map((p) => <a href={`tel:${p.replace(/\s+/g, "")}`} data-track="phone_click" data-loc="find_us" class="block text-[0.97rem] font-medium text-ink hover:text-gold-deep">{p}</a>)}
+            </span>
+          </div>
+          <a href={site.whatsapp.link} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-loc="find_us" class="card flex items-start gap-4 p-5 transition-colors hover:border-whatsapp/50">
+            <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[#e3f3e9] text-whatsapp"><Icon name="whatsapp" size={20} /></span>
+            <span>
+              <span class="block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">WhatsApp</span>
+              <span class="block text-[0.97rem] font-medium text-ink">{site.whatsapp.display}</span>
+            </span>
+          </a>
+        </div>
+        <div class="card flex items-start gap-4 p-5">
+          <span class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-stone text-gold-deep"><Icon name="clock" /></span>
+          <span>
+            <span class="block text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">Opening Hours</span>
+            <span class="block text-[0.97rem] font-medium text-ink">{site.hours.weekdays}</span>
+            <span class="block text-sm text-muted">{site.hours.sunday}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-[0.8fr_1.2fr]">
+    <figure class="relative h-80 overflow-hidden rounded-[1.25rem] border border-line bg-stone sm:h-auto sm:min-h-[34rem]">
+      <img src="/images/photos/clinic-storefront.webp" alt="Skin Lab Aesthetics clinic entrance, 85 CC-A Commercial, DHA Phase 4" width="631" height="1128" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" style="object-position:50% 35%" />
+    </figure>
+    <div class="relative min-h-[22rem] overflow-hidden rounded-[1.25rem] border border-line bg-stone lg:min-h-[34rem]">
+      <iframe
+        src={site.mapEmbedUrl}
+        title={`${site.brandName} ${site.address.city} Location`}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+        class="absolute inset-0 h-full w-full border-0 [filter:grayscale(.35)_sepia(.12)]"
+      ></iframe>
+    </div>
+    </div>
+  </div>
+</section>

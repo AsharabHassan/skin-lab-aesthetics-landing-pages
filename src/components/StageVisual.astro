@@ -1,0 +1,48 @@
+---
+// Lightweight replacement for the live site's 3D model: the same stage labels,
+// drawn as simple line illustrations of a skin cross-section.
+import { conditionStages } from "../data/site";
+interface Props { type: string }
+const { type } = Astro.props;
+const data = conditionStages[type] ?? conditionStages.general;
+
+// Growth shape for stage i (0..3), per condition type.
+function shape(i: number) {
+  const s = [0.15, 0.45, 0.75, 1][i];
+  if (type === "skintag") {
+    const h = 6 + 22 * s;
+    return `<path d="M52 34 C 50 ${34 - h * 0.4}, ${46 - 4 * s} ${34 - h}, 56 ${34 - h} S ${62 + 4 * s} ${34 - h * 0.4}, 60 34" fill="#e8cdb6" stroke="#7a5c1e" stroke-width="1.4"/>`;
+  }
+  if (type === "verruca") {
+    const d = 4 + 16 * s;
+    const dots = i >= 2 ? `<circle cx="52" cy="${36 + d * 0.3}" r="1.3" fill="#3f0000"/><circle cx="58" cy="${37 + d * 0.4}" r="1.3" fill="#3f0000"/><circle cx="62" cy="${35 + d * 0.3}" r="1.1" fill="#3f0000"/>` : "";
+    return `<path d="M42 34 Q 56 ${34 + d * 1.6} 70 34 Z" fill="#e2c49a" stroke="#7a5c1e" stroke-width="1.4"/>${dots}`;
+  }
+  const h = 3 + 16 * s;
+  const cluster = type === "genital" && i >= 1
+    ? `<path d="M${30 - 6 * s} 34 Q ${34} ${34 - h * 0.7} ${40 + 2 * s} 34" fill="#e2c49a" stroke="#7a5c1e" stroke-width="1.2"/><path d="M${72 - 2 * s} 34 Q ${78} ${34 - h * 0.6} ${84 + 4 * s} 34" fill="#e2c49a" stroke="#7a5c1e" stroke-width="1.2"/>`
+    : "";
+  const texture = i >= 1 ? `<path d="M${50 - 4 * s} ${34 - h * 0.55} l2 -2 l2 2 l2 -2 l2 2 l2 -2 l2 2" fill="none" stroke="#7a5c1e" stroke-width=".9"/>` : "";
+  const vessels = i >= 2 ? `<path d="M56 34 v8 M52 34 l-3 7 M60 34 l3 7" stroke="#9b2c2c" stroke-width="1" fill="none"/>` : "";
+  return `${cluster}<path d="M${42 - 6 * s} 34 Q 56 ${34 - h * 2} ${70 + 6 * s} 34 Z" fill="#e2c49a" stroke="#7a5c1e" stroke-width="1.4"/>${texture}${vessels}`;
+}
+const skin = `<rect x="4" y="34" width="104" height="18" rx="3" fill="#f1dfcf"/><path d="M4 34 H108" stroke="#c9a88a" stroke-width="1.2"/><path d="M4 43 H108" stroke="#e3cbb6" stroke-dasharray="3 3"/>`;
+---
+<figure class="card overflow-hidden">
+  <figcaption class="flex items-center justify-between border-b border-line px-6 py-4">
+    <span class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">How it develops</span>
+    <span class="font-serif text-lg italic text-ink">{data.name}</span>
+  </figcaption>
+  <ol class="relative px-6 py-2">
+    {data.stages.map((st, i) => (
+      <li class="grid grid-cols-[7rem_1fr] items-center gap-5 border-b border-line/70 py-5 last:border-0">
+        <svg viewBox="0 0 112 56" class="h-14 w-28 rounded-xl bg-ivory" aria-hidden="true" set:html={skin + shape(i)} />
+        <div>
+          <p class="text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-muted">{st.label}</p>
+          <p class="font-serif text-lg leading-snug text-ink">{st.title}</p>
+          {st.text && <p class="mt-0.5 text-sm italic text-body">{st.text}</p>}
+        </div>
+      </li>
+    ))}
+  </ol>
+</figure>

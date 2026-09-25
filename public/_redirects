@@ -1,0 +1,3 @@
+# "/" is the home page; any unknown path lands there.
+# Existing pages (e.g. /mole-removal -> mole-removal.html) are served first, so this only catches unknown URLs.
+/*  /  302

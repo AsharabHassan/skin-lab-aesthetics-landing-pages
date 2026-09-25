@@ -1,0 +1,38 @@
+---
+// Heading + copy (+ optional definition list and photo), used for explainer sections.
+import Icon from "../Icon.astro";
+interface Props {
+  id?: string; tone: string; eyebrow: string; title: string; paras: string[];
+  list?: { k?: string; v: string }[]; image?: { src: string; alt: string }; cta?: string;
+}
+const { id, tone, eyebrow, title, paras, list, image, cta } = Astro.props;
+---
+<section id={id} class:list={["scroll-mt-24 py-20 md:py-28", tone === "stone" && "border-t border-line bg-stone"]}>
+  <div class:list={["wrap grid items-center gap-12", image && "lg:grid-cols-[1.1fr_0.9fr] lg:gap-16"]}>
+    <div class:list={[!image && "mx-auto max-w-3xl text-center"]}>
+      <div class="reveal">
+        <p class:list={["eyebrow", !image && "justify-center"]}>{eyebrow}</p>
+        <h2 class="mt-4 text-[2rem] font-medium sm:text-[2.6rem] md:text-5xl">{title}</h2>
+      </div>
+      <div class="reveal mt-6 space-y-4 text-[1.05rem] leading-relaxed">
+        {paras.map((p) => <p>{p}</p>)}
+      </div>
+      {list && list.length > 0 && (
+        <dl class="mt-8 divide-y divide-line border-y border-line text-left">
+          {list.map((it) => (
+            <div class="reveal grid gap-1 py-5 sm:grid-cols-[11rem_1fr] sm:gap-6">
+              <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gold-deep sm:pt-1">{it.k}</dt>
+              <dd class="text-[0.98rem] leading-relaxed">{it.v}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {cta && <a href="#booking" class="btn btn-gold mt-9">{cta} <Icon name="arrow" size={18} /></a>}
+    </div>
+    {image && (
+      <figure class="reveal relative overflow-hidden rounded-[1.5rem] border border-line bg-sand">
+        <img src={image.src} alt={image.alt} loading="lazy" decoding="async" class="aspect-[4/5] w-full object-cover" />
+      </figure>
+    )}
+  </div>
+</section>

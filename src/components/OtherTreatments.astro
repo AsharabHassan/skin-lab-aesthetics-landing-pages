@@ -1,0 +1,46 @@
+---
+import SectionHead from "./SectionHead.astro";
+import Icon from "./Icon.astro";
+interface Item { title: string; shortLabel?: string; description: string; howItWorks?: string[]; benefits?: string[]; considerations?: string[] }
+interface Props { data: { sectionTitle: string; items: Item[] } }
+const { data } = Astro.props;
+const groups = (it: Item) =>
+  [
+    { label: "How It Works", list: it.howItWorks },
+    { label: "Benefits", list: it.benefits },
+    { label: "Considerations", list: it.considerations },
+  ].filter((g) => g.list && g.list.length);
+const kv = (b: string) => { const i = b.indexOf(":"); return i > 0 && i < 70 ? [b.slice(0, i), b.slice(i + 1)] : ["", b]; };
+---
+<section class="py-20 md:py-28">
+  <div class="wrap">
+    <SectionHead title={data.sectionTitle} eyebrow="Treatment Options" />
+    <div class="grid gap-5 lg:grid-cols-3">
+      {data.items.map((it) => (
+        <article class="card reveal flex flex-col p-7 md:p-8">
+          {it.shortLabel && <p class="text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-gold-deep">{it.shortLabel}</p>}
+          <h3 class="mt-2 text-[1.45rem] leading-snug">{it.title}</h3>
+          <p class="mt-4 text-[0.97rem] leading-relaxed">{it.description}</p>
+          {groups(it).length > 0 && (
+            <details class="group mt-auto border-t border-line pt-5 [&:not([open])]:mt-6">
+              <summary class="flex items-center justify-between text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-ink">
+                Benefits & considerations
+                <span class="chev grid h-8 w-8 place-items-center rounded-full border border-line text-gold-deep transition-transform"><Icon name="plus" size={16} /></span>
+              </summary>
+              <div class="mt-5 space-y-6">
+                {groups(it).map((g) => (
+                  <div>
+                    <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted">{g.label}</p>
+                    <ul class="dash-list mt-3 space-y-2.5 text-[0.93rem] leading-relaxed">
+                      {g.list!.map((b) => { const [k, v] = kv(b); return <li>{k && <strong class="font-semibold text-ink">{k}:</strong>}{v}</li>; })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

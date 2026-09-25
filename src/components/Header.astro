@@ -1,0 +1,59 @@
+---
+import Icon from "./Icon.astro";
+import { site, telHref, gallery } from "../data/site";
+interface Props { slug: string; nav?: { name: string; href: string }[] }
+const { slug, nav: navOverride } = Astro.props;
+const hub = slug === "dermatology";
+const hasResults = (gallery[slug] ?? []).length > 0;
+// On /dermatology, Real Results sits directly under the hero, so it leads the menu.
+const nav = navOverride ?? [
+  ...(hub ? [{ name: "Real Results", href: "#gallery" }] : []),
+  { name: "Treatments", href: "#treatments" },
+  ...(hub || !hasResults ? [] : [{ name: "Real Results", href: "#gallery" }]),
+  { name: "Details", href: "#details" },
+  { name: "Expertise", href: "#team" },
+  ...(hub ? [] : [{ name: "FAQ", href: "#faq" }]),
+];
+---
+<header id="site-header" class="sticky top-0 z-40 border-b border-transparent bg-ivory/85 backdrop-blur-md transition-[border-color,box-shadow] duration-300">
+  <div class="wrap flex h-[4.5rem] items-center justify-between gap-6">
+    <a href="/" aria-label={site.brandName} class="shrink-0">
+      <img src="/images/sla-logo-dark-trim.png" alt={site.brandName} width="864" height="240" class="h-9 w-auto md:h-10" />
+    </a>
+
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Page sections">
+      {nav.map((n) => <a href={n.href} class="text-[0.78rem] font-medium uppercase tracking-[0.16em] text-ink-2 transition-colors hover:text-gold-deep">{n.name}</a>)}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={telHref} data-track="phone_click" data-loc="header" class="btn btn-ghost hidden !min-h-11 !px-5 lg:inline-flex">
+        <Icon name="phone" size={16} /> {site.primaryPhone}
+      </a>
+      <details class="relative lg:hidden" id="mobile-menu">
+        <summary class="grid h-11 w-11 place-items-center rounded-full border border-line text-ink" aria-label="Open menu">
+          <Icon name="menu" size={20} />
+        </summary>
+        <div class="absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-2xl border border-line bg-[#fffdf9] p-3 shadow-[0_24px_48px_-24px_rgba(20,18,16,.35)]">
+          {nav.map((n) => <a href={n.href} class="block rounded-xl px-4 py-3 text-sm font-medium uppercase tracking-[0.14em] text-ink-2 hover:bg-stone">{n.name}</a>)}
+          <div class="hairline my-2"></div>
+          <a href={telHref} data-track="phone_click" data-loc="menu" class="block rounded-xl px-4 py-3 text-sm font-semibold text-ink hover:bg-stone">Call {site.primaryPhone}</a>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header")!;
+  const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 8);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  // Close the mobile menu after choosing a section.
+  const menu = document.getElementById("mobile-menu") as HTMLDetailsElement;
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => (menu.open = false)));
+  document.addEventListener("click", (e) => { if (!menu.contains(e.target as Node)) menu.open = false; });
+</script>
+
+<style>
+  .scrolled { border-bottom-color: var(--color-line); box-shadow: 0 8px 24px -20px rgba(20, 18, 16, 0.35); }
+</style>

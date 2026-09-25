@@ -1,0 +1,15 @@
+---
+// Fixed bottom action bar on phones/tablets: WhatsApp + Call side by side.
+import Icon from "./Icon.astro";
+import { site, telHref } from "../data/site";
+---
+<div class="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-ivory/95 px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md lg:hidden">
+  <div class="mx-auto grid max-w-lg grid-cols-2 gap-3">
+    <a href={site.whatsapp.link} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-loc="mobile_bar" class="btn btn-wa !min-h-[3.1rem] !px-3 !text-[0.78rem]">
+      <Icon name="whatsapp" size={20} /> WhatsApp
+    </a>
+    <a href={telHref} data-track="phone_click" data-loc="mobile_bar" class="btn btn-ink !min-h-[3.1rem] !px-3 !text-[0.78rem]">
+      <Icon name="phone" size={18} /> Call Now
+    </a>
+  </div>
+</div>
