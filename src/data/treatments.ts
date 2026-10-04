@@ -10,7 +10,7 @@ export type Block =
   | { type: "protocol"; id?: string; eyebrow: string; title: string; lead?: string; explainer?: { title: string; text: string }; steps: { title: string; text: string }[]; note?: string; offer?: { badge: string; title: string; text: string }; cta?: string }
   | { type: "treatments"; id?: string; eyebrow: string; title: string; lead?: string; items: { title: string; price?: string; paras: string[]; feels?: string; bullets?: string[]; bulletsLabel?: string; groups?: { label: string; list: string[] }[] }[]; outro?: string; cta?: string }
   | { type: "comparison"; id?: string; eyebrow: string; title: string; columns: string[]; rows: { label: string; cells: string[] }[] }
-  | { type: "prices"; id?: string; eyebrow: string; title: string; lead?: string; tables: { title: string; rows: { name: string; price: string; note?: string }[] }[]; bullets?: string[]; cta?: string }
+  | { type: "prices"; id?: string; eyebrow: string; title: string; lead?: string; tables: { title: string; rows: { name: string; price: string; note?: string; was?: string }[] }[]; bullets?: string[]; cta?: string }
   | { type: "priceBand"; id?: string; title: string; cta: string }
   | { type: "checklist"; id?: string; eyebrow: string; title: string; lead?: string; subhead?: string; items: { k?: string; v: string }[]; closing?: string; quote?: string; cta?: string };
 
@@ -47,7 +47,7 @@ const stats = (tech: [string, string]) => [
   { value: tech[0], label: tech[1] },
   { value: "Affordable", label: "Pricing Options" },
 ];
-const ALL_DOCTORS = ["shanze", "hamza", "subheen"];
+const ALL_DOCTORS = ["zonera", "shanze", "hamza", "subheen"];
 const FORM_INTRO = "Take the first step toward smooth and glowing skin by booking your consultation now.";
 const COMMITMENT: Block = {
   type: "checklist",
@@ -154,7 +154,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
               { name: "Upper Lip & Neck", price: "Rs 3,000" },
               { name: "Bikini", price: "Rs 6,000" },
               { name: "Face, Under Arms, Bikini", price: "Rs 15,000" },
-              { name: "Full Body (1 Session)", price: "Rs 25,000", note: "Special Price · Standard price for single sessions: 40,000" },
+              { name: "Full Body (1 Session)", price: "Rs 25,000", note: "Special Price · Standard price for single sessions:", was: "40,000" },
             ],
           },
           {
@@ -174,7 +174,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
               { name: "Upper Lip & Neck", price: "Rs 4,500" },
               { name: "Under Legs", price: "Rs 9,000" },
               { name: "Face, Under Arms, Under Legs", price: "Rs 22,500" },
-              { name: "Full Body", price: "Rs 30,000", note: "Special Price · Standard price for single sessions: 50,000" },
+              { name: "Full Body", price: "Rs 30,000", note: "Special Price · Standard price for single sessions:", was: "50,000" },
             ],
           },
         ],
@@ -282,7 +282,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         ],
       },
     ],
-    doctors: [],
+    doctors: ALL_DOCTORS,
     faqs: [],
     clinicSpecialty: "pigmentation treatment",
   },
@@ -461,7 +461,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         ],
       },
     ],
-    doctors: [],
+    doctors: ALL_DOCTORS,
     faqs: [],
     clinicSpecialty: "acne scar revision",
   },
@@ -471,7 +471,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
     route: "/advanced-facials",
     canonical: `${WP}/advanced-facials/`,
     title: "Advanced Facials in Lahore | HydraFacial, Carbon Laser & PhotoFacial | Skin Lab Aesthetics",
-    metaDescription: "Unlock your most radiant skin in Lahore with HydraFacial, Carbon Laser and PhotoFacial treatments at Skin Lab Aesthetics, DHA Phase 4. Facials start from Rs5000.",
+    metaDescription: "Unlock your most radiant skin in Lahore with HydraFacial, Carbon Laser and PhotoFacial treatments at Skin Lab Aesthetics, DHA Phase 4.",
     formOption: "Hydra Facial",
     hero: {
       label: "Advanced Facials · Lahore",
@@ -486,6 +486,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
     nav: [
       { name: "Real Results", href: "#gallery" },
       { name: "Treatments", href: "#treatments" },
+      { name: "Prices", href: "#prices" },
       { name: "Why Us", href: "#why" },
       { name: "Expertise", href: "#team" },
       { name: "FAQ", href: "#faq" },
@@ -548,7 +549,27 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         ],
         cta: "Get Started With a Consultation",
       },
-      { type: "priceBand", title: "Facials Starts from Rs5000", cta: "Schedule Your Consultation" },
+      {
+        type: "prices",
+        id: "prices",
+        eyebrow: "Transparent Pricing",
+        title: "Facial Pricing",
+        tables: [
+          {
+            title: "Facials",
+            rows: [
+              { name: "Glow Hydra Facial (12 Steps)", price: "Rs 7,500" },
+              { name: "Signature Facial", price: "Rs 15,000" },
+              { name: "Photo Facial", price: "Rs 7,500" },
+              { name: "Carbon Laser Facial", price: "Rs 8,500" },
+              { name: "Chemical Peel", price: "Rs 10,000" },
+              { name: "HydraFacial (Face or Neck)", price: "Rs 8,000" },
+              { name: "OxyGeneo Hydra Glow Facial", price: "Rs 20,000" },
+            ],
+          },
+        ],
+        cta: "Schedule Your Consultation",
+      },
       { ...COMMITMENT, id: "why", cta: "Book a Consultation" },
     ],
     doctors: ALL_DOCTORS,
@@ -729,13 +750,13 @@ export const treatmentPages: Record<string, TreatmentPage> = {
     slug: "dermal-fillers",
     route: "/dermal-fillers",
     canonical: `${WP}/dermal-fillers/`,
-    title: "Dermal Fillers in Lahore | From PKR 20,000 | Skin Lab Aesthetics",
-    metaDescription: "Rediscover your youthful glow with natural-looking hyaluronic acid dermal fillers at Skin Lab Aesthetics, DHA Lahore — lips, cheeks, under-eyes, jawline and more, starting from just PKR 20,000.",
+    title: "Dermal Fillers in Lahore | From PKR 25,000 | Skin Lab Aesthetics",
+    metaDescription: "Rediscover your youthful glow with natural-looking hyaluronic acid dermal fillers at Skin Lab Aesthetics, DHA Lahore — lips, cheeks, under-eyes, jawline and more, starting from just PKR 25,000.",
     formOption: "Dermal Fillers",
     hero: {
       label: "Hyaluronic Acid Dermal Fillers",
       h1: "Rediscover Your Youthful Glow. London Expertise, Lahore Prices.",
-      subtitle: "Look and feel your absolute best. Our Harley Street-trained aestheticians deliver stunning, natural-looking results with dermal fillers, starting from just PKR 20,000.",
+      subtitle: "Look and feel your absolute best. Our Harley Street-trained aestheticians deliver stunning, natural-looking results with dermal fillers, starting from just PKR 25,000.",
       badges: [
         "Transparent Pricing: No hidden costs, just honest value.",
         "Harley Street Trained: World-class expertise, right here in Lahore.",
@@ -789,11 +810,11 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         items: [
           { title: "Under-Eye & Tear Trough Fillers", price: "Starting from PKR 25,000", paras: ["Refresh Tired Eyes: Say goodbye to dark circles and hollows that make you look perpetually exhausted. Our delicate tear trough treatment restores volume to the under-eye area, creating a smoother, brighter, and more rested appearance instantly."] },
           // fixed: double full stop
-          { title: "Cheek Fillers", price: "Starting from PKR 20,000 per syringe", paras: ["Restore Youthful Volume: High cheekbones are a hallmark of youth. Our cheek filler treatment lifts and contours the mid-face, correcting age-related volume loss and providing a subtle, beautiful lift to the entire face."] },
+          { title: "Cheek Fillers", price: "Starting from PKR 25,000 per syringe", paras: ["Restore Youthful Volume: High cheekbones are a hallmark of youth. Our cheek filler treatment lifts and contours the mid-face, correcting age-related volume loss and providing a subtle, beautiful lift to the entire face."] },
           { title: "Jawline & Jowl Fillers", price: "Starting from PKR 25,000", paras: ["Define and Sculpt Your Jawline: Get the sharp, defined jawline you’ve always wanted. Our jawline contouring treatment tightens the skin, reduces the appearance of jowls, and creates a more youthful, elegant profile."] },
           { title: "Non-Surgical Nose Reshaping", price: "Starting from PKR 30,000", paras: ["The ‘Liquid Rhinoplasty’: Not ready for surgery? Our nose filler treatment can smooth out bumps on the bridge, lift the nasal tip, and improve the overall symmetry of your nose in under 30 minutes, with no downtime."] },
-          { title: "Lip Fillers", price: "Starting from PKR 20,000", paras: ["Perfect Your Pout: Whether you desire subtle definition or a noticeable boost in volume, our lip filler treatments are tailored to you. We enhance your natural lip shape, correct asymmetry, and smooth out fine lines for beautifully hydrated lips."] },
-          { title: "Marionette Line Fillers (Anti-Wrinkle)", price: "Starting from PKR 20,000", paras: ["Erase Sad Lines: Marionette lines, which run from the corners of the mouth downwards, can create a sad or angry look. We use precision-placed fillers to soften these folds, restoring a happier, more approachable expression"] },
+          { title: "Lip Fillers", price: "Starting from PKR 25,000", paras: ["Perfect Your Pout: Whether you desire subtle definition or a noticeable boost in volume, our lip filler treatments are tailored to you. We enhance your natural lip shape, correct asymmetry, and smooth out fine lines for beautifully hydrated lips."] },
+          { title: "Marionette Line Fillers (Anti-Wrinkle)", price: "Starting from PKR 25,000", paras: ["Erase Sad Lines: Marionette lines, which run from the corners of the mouth downwards, can create a sad or angry look. We use precision-placed fillers to soften these folds, restoring a happier, more approachable expression"] },
         ],
       },
       {
@@ -804,7 +825,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         lead: "We believe world-class aesthetic treatments should be accessible. Our transparent pricing ensures you know exactly what to expect.",
         tables: [],
         bullets: [
-          "Dermal Fillers: Starting from PKR 20,000 per syringe.",
+          "Dermal Fillers: Starting from PKR 25,000 per syringe.",
           "Final Price: Determined by the type of filler and amount required, which will be confirmed during your consultation.",
         ],
         cta: "Schedule Your Consultation",

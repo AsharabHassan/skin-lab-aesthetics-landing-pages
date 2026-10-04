@@ -9,7 +9,7 @@ const team = ids.map((id) => doctors[id as keyof typeof doctors]).filter(Boolean
   <section id="team" class="py-20 md:py-28">
     <div class="wrap">
       <SectionHead title={title} eyebrow="Elite Medical Professionals" lead={lead} />
-      <div class:list={["grid gap-6 md:gap-8", team.length === 2 ? "mx-auto max-w-4xl md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"]}>
+      <div class:list={["grid gap-6 md:gap-8", team.length % 2 === 0 ? "mx-auto max-w-4xl md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3"]}>
         {team.map((d) => (
           <article class="card reveal flex flex-col overflow-hidden">
             <div class="bg-[#faf8f2]">

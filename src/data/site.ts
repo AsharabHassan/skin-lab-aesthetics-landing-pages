@@ -33,13 +33,20 @@ export const site = {
   },
   footerCopy:
     "The finest dermatological and aesthetic treatments tailored to your specific skin needs are our speciality at Skinlab Aesthetics. Our clinic provides state-of-the-art procedures to help you attain the healthy, radiant skin you deserve, from sophisticated cosmetic solutions to professional skin care.",
-  consultFee: "PKR 3,000",
 };
 
 export const telHref = `tel:${site.primaryPhone.replace(/\s+/g, "")}`;
 
-export type DoctorId = "shanze" | "hamza" | "subheen";
+export type DoctorId = "zonera" | "shanze" | "hamza" | "subheen";
 export const doctors: Record<DoctorId, { id: DoctorId; name: string; title: string; description: string; image: string }> = {
+  zonera: {
+    id: "zonera",
+    name: "Dr. Zonera Awais",
+    title: "Consultant Dermatologist",
+    description:
+      "Dr. Zonera Awais is a Consultant Dermatologist with over 16 years of dermatological experience including clinical Dermatology especially diagnosing multiple dermatological diseases and management of both indoor and outdoor patient care. She has particular experience in management of infectious, inflammatory skin diseases, hair and nail diseases as well. She is well versed in the management of Acne, Acne Scarring, Melasma, Keloids and many more conditions. In addition to her clinical Dermatology practice she has vast experience of Aesthetic Dermatology especially in Minimally invasive skin rejuvenation, anti ageing procedures and many more. Her particular field of interest is management of Androgenetic Alopecia. She believes in exploring modern, safe and the most effective way to revive back Scalp hair be it in males or females for which she has vast experience with evidence based aesthetic treatments. Through her practice, Dr. Zonera Awais aims to deliver customised satisfactory results in both Clinical and Aesthetic Dermatology.",
+    image: "/images/doctors/dr-zonera.webp",
+  },
   shanze: {
     id: "shanze",
     name: "Dr. Shanze Shafique",
@@ -96,17 +103,6 @@ export const treatmentNames: Record<string, string> = {
   "mole-removal": "Mole Removal",
   "skin-tag-removal": "Skin Tag Removal",
   "anal-skin-tag-removal": "Anal Skin Tag Removal",
-};
-
-// Footer labels.
-export const footerLabels: Record<string, string> = {
-  dermatology: "Dermatology",
-  "warts-removal": "Warts",
-  "genital-warts-removal": "Genital Warts",
-  "verruca-removal": "Verruca",
-  "mole-removal": "Moles",
-  "skin-tag-removal": "Skin Tags",
-  "anal-skin-tag-removal": "Anal Skin Tags",
 };
 
 // Sibling-treatment switcher shown at the top of treatment pages.

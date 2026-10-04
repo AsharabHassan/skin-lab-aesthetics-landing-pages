@@ -1,15 +1,15 @@
 ---
-// Dark promotional band: the hub's Rs3000 offer, or the warts page's guide bonus.
+// Dark promotional band: the hub's in-person consultation, or the warts page's guide bonus.
 import Icon from "./Icon.astro";
 interface Props { variant: "consult" | "wartsGuide" }
 const { variant } = Astro.props;
 const c = variant === "consult"
   ? {
       badge: "Special In-Person Offer",
-      title: ["Visit Our Experts In-Person For Only", "Rs3000"],
+      title: ["Visit Our Experts", "In-Person"],
       lead: "Ready for a comprehensive face-to-face assessment with our Harley Street-trained dermatologists in Lahore? Book your detailed in-clinic consultation.",
       boxLabel: "What's Included",
-      box: "This fee covers a thorough examination by our specialist dermatologist, diagnosis, and a detailed discussion of your personalized treatment plan options.",
+      box: "Your consultation covers a thorough examination by our specialist dermatologist, diagnosis, and a detailed discussion of your personalized treatment plan options.",
       cta: "Schedule Your Consultation",
     }
   : {

@@ -16,7 +16,7 @@ const [featured, ...rest] = treatments;
         <article class:list={["card reveal group flex flex-col overflow-hidden", (i === 0 || t.links) && "lg:col-span-2 lg:flex-row"]}>
           <div class:list={["relative h-56 overflow-hidden bg-sand", (i === 0 || t.links) && "lg:h-auto lg:w-1/2"]}>
             <img src={t.photo} alt="" loading="lazy" decoding="async" width="600" height="1050" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" style={`object-position:${t.pos}`} />
-            <span class="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-ink backdrop-blur">From {t.from}</span>
+            {t.from && <span class="absolute left-4 top-4 rounded-full bg-ivory/90 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-ink backdrop-blur">From {t.from}</span>}
           </div>
           <div class:list={["flex flex-1 flex-col p-6 md:p-7", i === 0 && "lg:p-10"]}>
             <h3 class:list={["text-[1.5rem]", i === 0 && "lg:text-[2rem]"]}>{t.title}</h3>

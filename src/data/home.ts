@@ -21,7 +21,7 @@ export const home = {
     { value: "3", label: "Specialist Doctors" },
     { value: "I–VI", label: "Laser-Safe for All Skin Tones" },
   ],
-  doctors: ["shanze", "subheen", "hamza"],
+  doctors: ["zonera", "shanze", "subheen", "hamza"],
   faqsSectionTitle: "Choosing an Aesthetic Clinic in Lahore: Your Questions Answered",
   faqs: [
     {
@@ -32,7 +32,7 @@ export const home = {
     {
       question: "How much does a HydraFacial cost in Lahore?",
       answer:
-        "HydraFacial Rs 8,000 · Glow HydraFacial Rs 15,000 · OxyGeneo Hydra Glow Facial Rs 20,000.",
+        "HydraFacial Rs 8,000 · Glow Hydra Facial (12 steps) Rs 7,500 · OxyGeneo Hydra Glow Facial Rs 20,000.",
     },
     {
       question: "Is laser hair removal safe for darker skin tones?",
@@ -42,7 +42,7 @@ export const home = {
     {
       question: "How long do dermal fillers last?",
       answer:
-        "Hyaluronic acid fillers last 6 to 18 months. Treatment takes 20–40 minutes, and fillers start from Rs 20,000.",
+        "Hyaluronic acid fillers last 6 to 18 months. Treatment takes 20–40 minutes, and fillers start from Rs 25,000.",
     },
     {
       question: "Are treatments supervised by doctors?",
@@ -50,9 +50,9 @@ export const home = {
         "Yes. Every patient starts with a doctor's consultation. Injectables and medical treatments are done by our physicians.",
     },
     {
-      question: "How much is a consultation?",
+      question: "What happens at a consultation?",
       answer:
-        "Rs 3,000 for an in-clinic consultation with a doctor — examination, diagnosis and a treatment plan, with no pressure to proceed.",
+        "An in-clinic consultation with a doctor covers examination, diagnosis and a treatment plan, with no pressure to proceed.",
     },
     {
       question: "Where is the clinic and what are your timings?",
@@ -164,7 +164,7 @@ export const featured: Featured[] = [
       { label: "Downtime", value: "Minor swelling or redness for a day or two" },
       { label: "Results last", value: "6 to 18 months" },
     ],
-    price: "From Rs 20,000",
+    price: "From Rs 25,000",
     priceNote: "Final price depends on the filler type and amount needed",
     photo: { src: "/images/photos/lip-filler-stock.webp", pos: "50% 40%" },
     formOption: "Dermal Fillers",
@@ -228,14 +228,13 @@ export const featured: Featured[] = [
 ];
 
 // `href` links a card to its treatment page; `itemLinks` turns individual list items into links.
-export type Treatment = { title: string; photo: string; pos: string; text: string; from: string; items: string[]; links?: { label: string; href: string }[]; href?: string; itemLinks?: Record<string, string> };
+export type Treatment = { title: string; photo: string; pos: string; text: string; from?: string; items: string[]; links?: { label: string; href: string }[]; href?: string; itemLinks?: Record<string, string> };
 export const treatments: Treatment[] = [
   {
     title: "Advanced Facials",
     photo: "/images/photos/carbon-facial.webp",
     pos: "50% 25%",
     text: "Medicated facials to cleanse, hydrate and brighten.",
-    from: "Rs 7,500",
     items: ["HydraFacial", "Glow HydraFacial", "OxyGeneo Hydra Glow Facial", "Photo Facial", "Carbon Laser Facial"],
     href: "/advanced-facials",
   },
@@ -253,7 +252,7 @@ export const treatments: Treatment[] = [
     photo: "/images/photos/cheek-filler-stock.webp",
     pos: "50% 30%",
     text: "Fillers, anti-wrinkle injections and lifting treatments.",
-    from: "Rs 20,000",
+    from: "Rs 25,000",
     items: ["Lip, cheek & jawline fillers", "Under-eye (tear trough)", "Anti-wrinkle injections", "Thread lift & HIFU", "PRP & exosome facial rejuvenation"],
     itemLinks: { "Lip, cheek & jawline fillers": "/dermal-fillers", "Under-eye (tear trough)": "/dermal-fillers" },
   },
@@ -288,7 +287,6 @@ export const treatments: Treatment[] = [
     photo: "/images/photos/mole-exam.webp",
     pos: "50% 30%",
     text: "Safe removal of skin growths, with laser options.",
-    from: "Rs 3,000",
     items: [],
     links: [
       { label: "Warts Removal", href: "/warts-removal" },
@@ -313,7 +311,7 @@ export const technology = [
     name: "HydraFacial & OxyGeneo",
     title: "Facials that deliver an instant glow",
     text: "Cleanse, exfoliate and hydrate in one treatment.",
-    bullets: ["Glow HydraFacial and OxyGeneo upgrades", "From Rs 8,000"],
+    bullets: ["Glow HydraFacial and OxyGeneo upgrades"],
   },
 ];
 
@@ -322,11 +320,13 @@ export const prices: { group: string; rows: { name: string; price: string; note?
   {
     group: "Facials",
     rows: [
-      { name: "HydraFacial (face or neck)", price: "Rs 8,000" },
-      { name: "Glow HydraFacial", price: "Rs 15,000" },
-      { name: "OxyGeneo Hydra Glow Facial", price: "Rs 20,000" },
+      { name: "Glow Hydra Facial (12 steps)", price: "Rs 7,500" },
+      { name: "Signature Facial", price: "Rs 15,000" },
       { name: "Photo Facial", price: "Rs 7,500" },
-      { name: "Carbon Laser Facial", price: "Rs 10,000" },
+      { name: "Carbon Laser Facial", price: "Rs 8,500" },
+      { name: "Chemical Peel", price: "Rs 10,000" },
+      { name: "HydraFacial (face or neck)", price: "Rs 8,000" },
+      { name: "OxyGeneo Hydra Glow Facial", price: "Rs 20,000" },
     ],
   },
   {
@@ -342,7 +342,7 @@ export const prices: { group: string; rows: { name: string; price: string; note?
   {
     group: "Injectables & Skin",
     rows: [
-      { name: "Dermal fillers", price: "From Rs 20,000" },
+      { name: "Dermal fillers", price: "From Rs 25,000" },
       { name: "Acne treatment", price: "Rs 15,000" },
       { name: "Acne scar treatment", price: "Rs 20,000" },
       { name: "Pigmentation (1 session)", price: "Rs 20,000" },

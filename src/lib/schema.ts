@@ -85,7 +85,7 @@ const clinic = () => ({
     { "@type": "AdministrativeArea", name: "Cantt" },
   ],
   sameAs: [site.social.instagram, site.social.facebook],
-  physician: [physician("shanze"), physician("hamza"), physician("subheen")],
+  physician: [physician("zonera"), physician("shanze"), physician("hamza"), physician("subheen")],
   parentOrganization: { "@id": `${O}/#organization` },
 });
 

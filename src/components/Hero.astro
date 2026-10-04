@@ -67,12 +67,8 @@ const team = (page.doctors as string[]).map((id) => doctors[id as keyof typeof d
           </ul>
         )}
 
-        <div class="mt-8 flex flex-col gap-5 sm:flex-row sm:items-center">
+        <div class="mt-8 hidden lg:flex">
           <a href="#booking" class="btn btn-gold hidden lg:inline-flex">{page.hero.cta ?? "Book Your Consultation"} <Icon name="arrow" size={18} /></a>
-          <div class="sm:border-l sm:border-line sm:pl-5 lg:border-line">
-            <p class="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted">In-Clinic Consultation</p>
-            <p class="font-serif text-2xl text-ink">Starts at Rs 3,000</p>
-          </div>
         </div>
 
         {page.stats?.length > 0 && (

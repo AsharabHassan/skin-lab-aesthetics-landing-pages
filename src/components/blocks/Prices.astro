@@ -4,7 +4,7 @@ import SectionHead from "../SectionHead.astro";
 import Icon from "../Icon.astro";
 interface Props {
   id?: string; tone: string; eyebrow: string; title: string; lead?: string;
-  tables: { title: string; rows: { name: string; price: string; note?: string }[] }[]; bullets?: string[]; cta?: string;
+  tables: { title: string; rows: { name: string; price: string; note?: string; was?: string }[] }[]; bullets?: string[]; cta?: string;
 }
 const { id, tone, eyebrow, title, lead, tables, bullets, cta } = Astro.props;
 const kv = (b: string) => { const i = b.indexOf(":"); return i > 0 ? [b.slice(0, i), b.slice(i + 1)] : ["", b]; };
@@ -23,7 +23,7 @@ const kv = (b: string) => { const i = b.indexOf(":"); return i > 0 ? [b.slice(0,
                 <div class="flex items-baseline gap-3">
                   <dt class="text-[0.97rem] text-ink-2">
                     {r.name}
-                    {r.note && <span class="mt-0.5 block text-xs font-semibold uppercase tracking-[0.12em] text-gold-deep">{r.note}</span>}
+                    {r.note && <span class="mt-0.5 block text-xs font-semibold uppercase tracking-[0.12em] text-gold-deep">{r.note}{r.was && <> <s class="decoration-[1.5px]">{r.was}</s></>}</span>}
                   </dt>
                   <span aria-hidden="true" class="mb-1 flex-1 border-b border-dotted border-sand"></span>
                   <dd class="shrink-0 font-serif text-lg text-ink">{r.price}</dd>

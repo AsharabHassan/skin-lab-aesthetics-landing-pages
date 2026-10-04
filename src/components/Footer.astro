@@ -1,11 +1,10 @@
 ---
 import Icon from "./Icon.astro";
-import { site, pages, pageOrder, footerLabels } from "../data/site";
-import { treatmentPages, treatmentOrder, shortLabels } from "../data/treatments";
+import { site } from "../data/site";
 ---
 <footer class="bg-[#0e0c0b] pb-10 pt-16 text-[#a89f92] md:pt-20">
   <div class="wrap">
-    <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <div class="grid gap-12 md:grid-cols-2 md:gap-20">
       <div>
         <img src="/images/sla-logo-trim.png" alt={site.brandName} width="864" height="240" loading="lazy" class="h-12 w-auto" />
         <p class="mt-6 max-w-sm text-sm leading-relaxed">{site.footerCopy}</p>
@@ -14,19 +13,6 @@ import { treatmentPages, treatmentOrder, shortLabels } from "../data/treatments"
             <a href={`tel:${p.replace(/\s+/g, "")}`} data-track="phone_click" data-loc="footer" class="flex items-center gap-2 text-sm font-semibold tracking-wider text-gold-light hover:text-ivory"><Icon name="phone" size={14} /> {p}</a>
           ))}
         </div>
-      </div>
-      <div>
-        <h2 class="font-sans text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-gold-light">Aesthetics</h2>
-        <ul class="mt-6 space-y-3 text-sm">
-          <li><a href="/" class="hover:text-ivory">Aesthetic Clinic</a></li>
-          {treatmentOrder.map((s) => <li><a href={treatmentPages[s].route} class="hover:text-ivory">{shortLabels[s]}</a></li>)}
-        </ul>
-      </div>
-      <div>
-        <h2 class="font-sans text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-gold-light">Dermatology</h2>
-        <ul class="mt-6 space-y-3 text-sm">
-          {pageOrder.map((s) => <li><a href={pages[s].route} class="hover:text-ivory">{footerLabels[s]}</a></li>)}
-        </ul>
       </div>
       <div>
         <h2 class="font-sans text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-gold-light">Visit Us</h2>
