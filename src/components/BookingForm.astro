@@ -65,9 +65,9 @@ const selected = treatmentNames[slug] ?? choices[0];
       <a href={site.whatsapp.link} target="_blank" rel="noopener noreferrer" data-track="whatsapp_click" data-loc="thank_you" class="btn btn-wa !min-h-12 !px-4"><Icon name="whatsapp" size={18} /> WhatsApp</a>
       <a href={telHref} data-track="phone_click" data-loc="thank_you" class="btn btn-ink !min-h-12 !px-4"><Icon name="phone" size={16} /> Call {site.primaryPhone}</a>
     </div>
-    <form method="dialog" class="text-right">
-      <button class="text-sm font-medium text-muted underline-offset-4 hover:text-ink hover:underline">Close</button>
-    </form>
+    <div class="text-right">
+      <button type="button" data-close class="text-sm font-medium text-muted underline-offset-4 hover:text-ink hover:underline">Close</button>
+    </div>
   </div>
 </dialog>
 
@@ -119,6 +119,8 @@ const selected = treatmentNames[slug] ?? choices[0];
       label.textContent = "Book Consultation";
     }
   });
+  // Plain button, not <form method="dialog">: a dialog form fires a submit event GTM counts as a form submission.
+  dialog.querySelector("[data-close]")!.addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
 
   // "Book X" buttons elsewhere on the page pre-select X in the form.

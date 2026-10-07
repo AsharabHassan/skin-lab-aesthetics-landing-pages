@@ -4,11 +4,11 @@
 import Icon from "./Icon.astro";
 ---
 <dialog id="offer-popup" aria-label="Laser hair removal package offer" class="m-auto w-[min(30rem,calc(100vw-2rem),calc((100dvh-9rem)*0.845))] overflow-visible rounded-3xl border border-line bg-[#fffdf9] p-0 text-body shadow-2xl backdrop:bg-ink/60 backdrop:backdrop-blur-sm">
-  <form method="dialog" class="absolute -right-3 -top-3 z-10">
-    <button aria-label="Close offer" class="grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-ink shadow-lg hover:bg-stone">
+  <div class="absolute -right-3 -top-3 z-10">
+    <button type="button" data-close aria-label="Close offer" class="grid h-10 w-10 place-items-center rounded-full border border-line bg-ivory text-ink shadow-lg hover:bg-stone">
       <Icon name="close" size={18} />
     </button>
-  </form>
+  </div>
   <img
     src="/images/offers/laser-offer.webp"
     alt="Laser hair removal packages: Face Laser Package, 8 sessions, now Rs 32,000 (was Rs 40,000). Full Body Laser, 6 sessions, now Rs 110,000 (was Rs 150,000). Limited time offer."
@@ -37,6 +37,8 @@ import Icon from "./Icon.astro";
     }, 3000);
   }
 
+  // Plain button, not <form method="dialog">: a dialog form fires a submit event GTM counts as a form submission.
+  popup.querySelector("[data-close]")!.addEventListener("click", () => popup.close());
   // Click on the backdrop (outside the card) closes it.
   popup.addEventListener("click", (e) => { if (e.target === popup) popup.close(); });
   // Close first so the page can scroll to the form.
