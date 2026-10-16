@@ -292,7 +292,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
     route: "/nail-fungus",
     canonical: `${WP}/nail-fungus/`,
     title: "Laser Nail Fungus Removal in Lahore | Skin Lab Aesthetics",
-    metaDescription: "Say goodbye to nail fungus with advanced laser therapy at Skin Lab Aesthetics, DHA Lahore. Safe, pain-free treatment for toenail and fingernail fungus, from Rs 1,500.",
+    metaDescription: "Say goodbye to nail fungus with advanced laser therapy at Skin Lab Aesthetics, DHA Lahore. Safe, pain-free treatment for toenail and fingernail fungus, from Rs 3,000.",
     formOption: "Nail Fungus",
     hero: {
       label: "Laser Nail Fungus Removal",
@@ -343,7 +343,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         items: [
           {
             title: "Laser Nail Fungus Removal",
-            price: "Starts from Rs 1,500",
+            price: "Starts from Rs 3,000",
             paras: ["Our clinic offers a cutting-edge laser treatment as a safe and effective solution for both toenail and fingernail fungus. This non-invasive procedure utilizes precise laser energy to target the fungus directly, eliminating it at its source."],
             bulletsLabel: "Benefits of Laser Nail Fungus Removal:",
             bullets: [
@@ -357,7 +357,7 @@ export const treatmentPages: Record<string, TreatmentPage> = {
         outro: "Don’t let nail fungus limit you. Schedule a consultation today to learn more about our advanced laser treatment and experience the freedom of healthy, beautiful nails again!",
         cta: "Get Started With a Consultation",
       },
-      { type: "priceBand", title: "Nail Fungus Removal Starts from Rs1500", cta: "Schedule Your In Clinic Consultation" },
+      { type: "priceBand", title: "Nail Fungus Removal Starts from Rs3000", cta: "Schedule Your In Clinic Consultation" },
       {
         type: "intro",
         eyebrow: "Your Treatment Journey",
