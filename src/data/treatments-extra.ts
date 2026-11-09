@@ -53,12 +53,12 @@ export const extraPages: Record<string, TreatmentPage> = {
     route: "/skin-tightening",
     canonical: `${LP}/skin-tightening`,
     title: "HIFU Skin Tightening in Lahore | Full Face Rs 35,000 | Skin Lab Aesthetics",
-    metaDescription: "Non-surgical skin tightening in DHA Lahore: HIFU, Endolift, Fotona 4D and EMFace, planned by doctors. Full face HIFU Rs 35,000. Book your consultation.",
+    metaDescription: "Non-surgical skin tightening in DHA Lahore: HIFU, thread lift and dermal fillers, planned by doctors. Full face HIFU Rs 35,000. Book your consultation.",
     formOption: "HIFU Skin Tightening",
     hero: {
       label: "HIFU & Non-Surgical Lifting",
       h1: "Lift and Tighten Without Surgery — HIFU Skin Tightening in Lahore",
-      subtitle: "Sagging jawline, double chin or loose neck skin? Our doctors use HIFU and other non-surgical lifting treatments to tighten skin with no cuts and little downtime. Full face HIFU Rs 35,000.",
+      subtitle: "Sagging jawline, double chin or loose neck skin? Our doctors use HIFU, thread lifts and dermal fillers to lift and tighten skin with no surgery and little downtime. Full face HIFU Rs 35,000.",
       badges: ["Full face HIFU Rs 35,000", "Doctor-planned treatment", "No surgery, little downtime", "DHA Phase 4, Lahore"],
     },
     form: { intro: "Tell us which area bothers you and our team will call you back to book your consultation." },
@@ -83,14 +83,12 @@ export const extraPages: Record<string, TreatmentPage> = {
         type: "treatments",
         id: "treatments",
         eyebrow: "Your Options",
-        title: "Non-Surgical Lifting Treatments We Offer",
+        title: "Our Skin Tightening Treatments",
         lead: "Your doctor recommends the right treatment, or combination, after examining your skin.",
         items: [
           { title: "HIFU (High-Intensity Focused Ultrasound)", price: "Full face Rs 35,000", paras: ["Focused ultrasound heats the deeper layers of the skin to stimulate new collagen, giving a gradual lift over the following weeks. No needles or cuts."] },
-          { title: "Endolift", price: "Price at consultation", paras: ["A fine laser fibre placed under the skin tightens and contours areas such as the jawline, jowls and double chin."] },
-          { title: "Fotona 4D", price: "Price at consultation", paras: ["A four-step laser facelift that works inside and outside the mouth to firm and refresh the face."] },
-          { title: "EMFace", price: "Price at consultation", paras: ["A needle-free treatment that combines radiofrequency and muscle stimulation to lift and tone the face."] },
-          { title: "Thread Lift", price: "Price at consultation", paras: ["Dissolvable threads lift sagging skin straight away. See our thread lift page for details."] },
+          { title: "Thread Lift", price: "Price at consultation", paras: ["Dissolvable threads lift sagging cheeks, jowls and brows straight away, and boost collagen as they dissolve."] },
+          { title: "Dermal Fillers", price: "From Rs 25,000", paras: ["Hyaluronic acid fillers restore lost volume in the cheeks, jawline and under-eyes for a lifted, refreshed look."] },
         ],
       },
       {
@@ -98,7 +96,7 @@ export const extraPages: Record<string, TreatmentPage> = {
         id: "prices",
         eyebrow: "Transparent Pricing",
         title: "HIFU Prices",
-        lead: "Prices from skinlabaesthetics.pk. Other lifting treatments are priced at consultation.",
+        lead: "Thread lift is priced at consultation. Dermal fillers start from Rs 25,000.",
         tables: [{
           title: "HIFU Skin Tightening",
           rows: [
