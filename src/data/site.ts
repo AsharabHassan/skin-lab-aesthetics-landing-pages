@@ -92,6 +92,12 @@ export const webhooks: Record<string, string> = {
   "acne-scar-removal": HOOK + "L2ck0cpB4lwyC7q8cAqH",
   "hair-loss-treatment": HOOK + "X8veDw1A3QpqkC46WopL",
   "nail-fungus": HOOK + "6XpUtgQhnZOrexRWoNi1",
+  "skin-tightening": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
+  "thread-lift": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
+  "microneedling": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
+  "skin-boosters": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
+  "tattoo-removal": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
+  "ingrown-toenail": HOOK + "I6QYFdOrWmWY9WlOx8eR", // new page (9 Nov 2026) -> home / aesthetic clinic workflow
 };
 
 // Form "Treatment Interest" options.

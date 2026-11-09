@@ -3,6 +3,7 @@
 // Before/afters: the source pages' images, minus two AI-generated (Google ImageFX) images and one carrying
 // another clinic's @harleystreetmedic watermark. Where that left a page short, existing Skin Lab results are used.
 import { site } from "./site";
+import { extraPages, extraOrder, extraLabels } from "./treatments-extra";
 
 export type Block =
   | { type: "intro"; id?: string; eyebrow: string; title: string; paras: string[]; list?: { k?: string; v: string }[]; image?: { src: string; alt: string }; cta?: string }
@@ -844,7 +845,8 @@ export const treatmentPages: Record<string, TreatmentPage> = {
   },
 };
 
-export const treatmentOrder = ["laser-hair-removal", "advanced-facials", "dermal-fillers", "pigmentation", "skin-whitening", "acne-scar-removal", "hair-loss-treatment", "nail-fungus"];
+Object.assign(treatmentPages, extraPages);
+export const treatmentOrder = ["laser-hair-removal", "advanced-facials", "dermal-fillers", "pigmentation", "skin-whitening", "acne-scar-removal", "hair-loss-treatment", "nail-fungus", ...extraOrder];
 
 // The three skin pages link to each other at the top, as on the source site.
 export const skinCluster = ["skin-whitening", "acne-scar-removal", "pigmentation"];
@@ -857,6 +859,7 @@ export const shortLabels: Record<string, string> = {
   "acne-scar-removal": "Acne Scar Removal",
   "hair-loss-treatment": "Hair Loss",
   "nail-fungus": "Nail Fungus",
+  ...extraLabels,
 };
 
 // The source pages' Google reviews widget: "Excellent, based on 21 reviews", showing these eight.
